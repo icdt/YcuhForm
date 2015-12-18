@@ -1,0 +1,170 @@
+﻿@model IPagedList<YcuhForum.Models.Article>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a href="#model" class="btn btn-default test fancybox" onclick="OpenCreate()">新增</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Article_Creater)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Article_Group)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Article_Category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Article_Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Article_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Article_Content)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Article_File)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Article_IsShow)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Article_IsReplay)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Article_OtherSiteUrl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Article_DelLock)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Article_CreateTime)
+        </th>
+       
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Article_Creater)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Article_Group)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Article_Category)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Article_Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Article_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Article_Content)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Article_File)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Article_IsShow)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Article_IsReplay)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Article_OtherSiteUrl)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Article_DelLock)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Article_CreateTime)
+        </td>
+    
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Article_Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Article_Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Article_Id })
+        </td>
+    </tr>
+}
+
+</table>
+
+<div id="model" class="model" style="display:none;">
+    @Html.Action("Create");
+</div>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+@section header{
+    <link href="~/Content/sorter/style.css" rel="stylesheet" />
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <link href="~/Scripts/fancybox/css/jquery.fancybox.css" rel="stylesheet">
+}
+@section Scripts{
+    <script src="~/Scripts/fancybox/js/jquery.fancybox.js"></script>
+
+    <script>
+        $(function () {
+            fanc();
+        });
+        function fanc() {
+            $(".fancybox").fancybox({
+                autoSize: false,
+                arrows: false,
+                width:'55%',
+                openEffect: 'fade', //fade, elastic
+                closeEffect: 'fade', //fade, elastic
+                prevEffect: 'elastic',
+                nextEffect: 'elastic',
+                tpl: {
+                    next: '<a title="下一則" class="fancybox-nav fancybox-next"><span></span></a>',
+                    prev: '<a title="上一則" class="fancybox-nav fancybox-prev"><span></span></a>'
+                },
+                helpers: {
+                    title: {
+                        //inside, outside, over
+                    },
+                    overlay: {
+                        speedIn: 0,
+                        speedOut: 300,
+                        opacity: 0.8,
+                        css: {
+                            cursor: 'default'
+                        },
+                        closeClick: false
+                    }
+                    //overlay: {
+                    //    speedOut: 0
+                    //}
+                },
+                afterLoad: function () {
+                    var editor = CKEDITOR.instances['Article_Content'];
+                    if (editor) {
+                        CKEDITOR.instances['Article_Content'].destroy();
+                    }
+                    CKEDITOR.replace('Article_Content');
+                }
+            });
+            /*關閉*/
+            $("#close").click(function () {
+                $.fancybox.close();
+            });
+        }
+
+        function OpenCreate() {
+            $.fancybox.open();
+        }
+    </script>
+
+
+
+}
