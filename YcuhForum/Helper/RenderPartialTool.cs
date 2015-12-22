@@ -12,9 +12,7 @@ namespace YcuhForum.Helper
 
         public static string RenderPartialViewToString(dynamic target, string viewName, object model)
         {
-          
             target.ViewData.Model = model;
-
             using (var sw = new StringWriter())
             {
                 ViewEngineResult viewResult = System.Web.Mvc.ViewEngines.Engines.FindPartialView(target.ControllerContext, viewName);

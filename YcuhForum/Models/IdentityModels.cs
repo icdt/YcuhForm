@@ -56,6 +56,14 @@ namespace YcuhForum.Models
         public DbSet<ExaminationRecord> ExaminationRecords { get; set; }
 
         public DbSet<ArticleUserRecord> ArticleUserRecords { get; set; }
+
+        public DbSet<UserPoint> UserPoints { get; set; }
+
+        public DbSet<PointCategory> PointCategorys { get; set; }
+
+
+        public DbSet<ArticleUserReplay> ArticleUserReplays { get; set; }
+
         
 
     }

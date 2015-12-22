@@ -35,6 +35,6 @@ namespace YcuhForum.Models
 
         public DateTime Article_UpdateTime { get; set; }
 
-        public string Article_FK_Point { get; set; }
+        public int Article_Point { get; set; }
     }
 }

@@ -80,10 +80,9 @@ namespace YcuhForum.Models
 
                 foreach (ArticleUserRecord item in objInDB)
                 {
-                    var theNewFromOutside = ArticleUserRecords.FirstOrDefault(a => a.ArticleUserRecord_Id == item.ArticleUserRecord_Id);
-
-                    Mapper.Map(theNewFromOutside, item);
-
+                    ///只為了更新時間
+                    //var theNewFromOutside = ArticleUserRecords.FirstOrDefault(a => a.ArticleUserRecord_Id == item.ArticleUserRecord_Id);
+                    item.ArticleUserRecord_UpdateTime = DateTime.Now;
                 }
 
                 lock (_ArticleUserRecordQueueLock)
@@ -126,6 +125,54 @@ namespace YcuhForum.Models
                     }
                 }
             }
+        }
+        #endregion
+
+
+        #region Domain & ViewModel 映射
+
+        public static ArticleUserRecordModel DomainToModel(ArticleUserRecord ArticleUserRecord)
+        {
+            ArticleUserRecordModel viewModel = new ArticleUserRecordModel();
+            Mapper.CreateMap<ArticleUserRecord, ArticleUserRecordModel>();
+            viewModel = Mapper.Map<ArticleUserRecord, ArticleUserRecordModel>(ArticleUserRecord);
+
+            return viewModel;
+        }
+
+        public static ArticleUserRecord ModelToDomain(ArticleUserRecordModel viewModel)
+        {
+            ArticleUserRecord ArticleUserRecord = new ArticleUserRecord();
+
+            try
+            {
+                Mapper.CreateMap<ArticleUserRecordModel, ArticleUserRecord>();
+                ArticleUserRecord = Mapper.Map<ArticleUserRecordModel, ArticleUserRecord>(viewModel);
+            }
+            catch (Exception e)
+            {
+
+            }
+
+
+            return ArticleUserRecord;
+        }
+
+        #endregion
+
+
+
+
+        #region 進階查詢
+
+        public static List<ArticleUserRecord> getEnforceUser(string articleId)
+        {
+           return _ArticleUserRecordCache.Where(a => a.ArticleUserRecord_FK_ArticleId == articleId && a.ArticleUserRecord_UpdateTime == new DateTime()).ToList();
+        }
+
+        public static ArticleUserRecord getRecordByArticelAndUser(string articleId,string userId)
+        {
+            return _ArticleUserRecordCache.Where(a => a.ArticleUserRecord_FK_ArticleId == articleId && a.ArticleUserRecord_FK_UserId == userId).FirstOrDefault();
         }
         #endregion
     }

@@ -89,3 +89,5 @@ D:\githubYCUHForum\YcuhForum\YcuhForum\bin\PagedList.Mvc.dll
 D:\githubYCUHForum\YcuhForum\YcuhForum\bin\AutoMapper.xml
 D:\githubYCUHForum\YcuhForum\YcuhForum\bin\PagedList.xml
 D:\githubYCUHForum\YcuhForum\YcuhForum\bin\PagedList.Mvc.xml
+D:\githubYCUHForum\YcuhForum\YcuhForum\obj\Debug\YcuhForum.Migrations.addNewTable.resources
+D:\githubYCUHForum\YcuhForum\YcuhForum\obj\Debug\YcuhForum.Migrations.addTwoTable.resources

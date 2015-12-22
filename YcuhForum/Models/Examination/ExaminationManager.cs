@@ -128,5 +128,36 @@ namespace YcuhForum.Models
             }
         }
         #endregion
+
+        #region Domain & ViewModel 映射
+
+        public static ExaminationModel DomainToModel(Examination Examination)
+        {
+            ExaminationModel viewModel = new ExaminationModel();
+            Mapper.CreateMap<Examination, ExaminationModel>();
+            viewModel = Mapper.Map<Examination, ExaminationModel>(Examination);
+
+            return viewModel;
+        }
+
+        public static Examination ModelToDomain(ExaminationModel viewModel)
+        {
+            Examination Examination = new Examination();
+
+            try
+            {
+                Mapper.CreateMap<ExaminationModel, Examination>();
+                Examination = Mapper.Map<ExaminationModel, Examination>(viewModel);
+            }
+            catch (Exception e)
+            {
+
+            }
+
+
+            return Examination;
+        }
+
+        #endregion
     }
 }

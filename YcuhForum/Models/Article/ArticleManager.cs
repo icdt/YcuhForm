@@ -17,7 +17,7 @@ namespace YcuhForum.Models
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                _ArticleCache = db.Articles.ToList();
+                _ArticleCache = db.Articles.AsNoTracking().Where(a=>!a.Article_DelLock).ToList();
             }
         }
         #endregion
@@ -82,6 +82,26 @@ namespace YcuhForum.Models
                 {
                     var theNewFromOutside = Articles.FirstOrDefault(a => a.Article_Id == item.Article_Id);
 
+                    item.Article_Category = theNewFromOutside.Article_Category;
+
+                    item.Article_Content = theNewFromOutside.Article_Content;
+
+                    item.Article_DelLock = theNewFromOutside.Article_DelLock;
+
+                    item.Article_File = theNewFromOutside.Article_File;
+
+                    item.Article_Group = theNewFromOutside.Article_Group;
+
+                    item.Article_IsReplay = theNewFromOutside.Article_IsReplay;
+
+                    item.Article_IsShow = theNewFromOutside.Article_IsShow;
+                    
+                    item.Article_OtherSiteUrl = theNewFromOutside.Article_OtherSiteUrl;
+
+                    item.Article_Title = theNewFromOutside.Article_Title;
+
+                    item.Article_UpdateTime = DateTime.Now;
+
                     Mapper.Map(theNewFromOutside, item);
 
                 }
@@ -139,7 +159,7 @@ namespace YcuhForum.Models
         public static ArticleModel DomainToModel(Article Article)
         {
             ArticleModel viewModel = new ArticleModel();
-
+            Mapper.CreateMap<Article, ArticleModel>();
             viewModel = Mapper.Map<Article, ArticleModel>(Article);
 
             return viewModel;
@@ -149,7 +169,16 @@ namespace YcuhForum.Models
         {
             Article Article = new Article();
 
-            Article = Mapper.Map<ArticleModel, Article>(viewModel);
+            try
+            {
+                Mapper.CreateMap<ArticleModel, Article>();
+                Article = Mapper.Map<ArticleModel, Article>(viewModel);
+            }
+            catch(Exception e)
+            {
+
+            }
+          
 
             return Article;
         }
@@ -157,7 +186,10 @@ namespace YcuhForum.Models
         #endregion
 
         #region 進階查詢
-
+        public static List<Article> getArticleByUser(List<string> groupList)
+        {
+            return _ArticleCache.Where(a => groupList.Any(b => a.Article_Group == b) && a.Article_IsShow && !a.Article_DelLock).OrderByDescending(a => a.Article_CreateTime).ToList();
+        }
         #endregion
     }
 }

@@ -178,9 +178,15 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ArticleReadController.cs" />
+    <Compile Include="Controllers\ArticleRecordController.cs" />
+    <Compile Include="Controllers\ArticleReplayController.cs" />
     <Compile Include="Controllers\BackendArticleController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ExaminationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\BackendPointCategoryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -189,19 +195,38 @@
     <Compile Include="Migrations\201512180426192_InitialDB.Designer.cs">
       <DependentUpon>201512180426192_InitialDB.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512210350384_addNewTable.cs" />
+    <Compile Include="Migrations\201512210350384_addNewTable.Designer.cs">
+      <DependentUpon>201512210350384_addNewTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512211100171_addTwoTable.cs" />
+    <Compile Include="Migrations\201512211100171_addTwoTable.Designer.cs">
+      <DependentUpon>201512211100171_addTwoTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ArticleUserRecord\ArticleUserRecord.cs" />
     <Compile Include="Models\ArticleUserRecord\ArticleUserRecordManager.cs" />
+    <Compile Include="Models\ArticleUserRecord\ArticleUserRecordModel.cs" />
+    <Compile Include="Models\ArticleUserReplay\ArticleUserReplay.cs" />
+    <Compile Include="Models\ArticleUserReplay\ArticleUserReplayManager.cs" />
+    <Compile Include="Models\ArticleUserReplay\ArticleUserReplayModel.cs" />
     <Compile Include="Models\Article\Article.cs" />
     <Compile Include="Models\Article\ArticleManager.cs" />
     <Compile Include="Models\Article\ArticleModel.cs" />
+    <Compile Include="Models\Authoption\Authoption.cs" />
     <Compile Include="Models\ExaminationRecord\ExaminationRecord.cs" />
     <Compile Include="Models\ExaminationRecord\ExaminationRecordManager.cs" />
     <Compile Include="Models\Examination\Examination.cs" />
     <Compile Include="Models\Examination\ExaminationManager.cs" />
+    <Compile Include="Models\Examination\ExaminationModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PointCategory\PointCategory.cs" />
+    <Compile Include="Models\PointCategory\PointCategoryManager.cs" />
+    <Compile Include="Models\PointCategory\PointCategoryModel.cs" />
+    <Compile Include="Models\Point\UserPoint.cs" />
+    <Compile Include="Models\Point\UserPointManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -323,6 +348,7 @@
     <Content Include="Upload\ckeditor\plugins\a11yhelp\dialogs\lang\eo.js" />
     <Content Include="Upload\ckeditor\plugins\a11yhelp\dialogs\lang\es.js" />
     <Content Include="Upload\ckeditor\plugins\a11yhelp\dialogs\lang\et.js" />
+    <Content Include="Upload\ckeditor\plugins\a11yhelp\dialogs\lang\eu.js" />
     <Content Include="Upload\ckeditor\plugins\a11yhelp\dialogs\lang\fa.js" />
     <Content Include="Upload\ckeditor\plugins\a11yhelp\dialogs\lang\fi.js" />
     <Content Include="Upload\ckeditor\plugins\a11yhelp\dialogs\lang\fo.js" />
@@ -402,6 +428,7 @@
     <Content Include="Upload\ckeditor\plugins\specialchar\dialogs\lang\eo.js" />
     <Content Include="Upload\ckeditor\plugins\specialchar\dialogs\lang\es.js" />
     <Content Include="Upload\ckeditor\plugins\specialchar\dialogs\lang\et.js" />
+    <Content Include="Upload\ckeditor\plugins\specialchar\dialogs\lang\eu.js" />
     <Content Include="Upload\ckeditor\plugins\specialchar\dialogs\lang\fa.js" />
     <Content Include="Upload\ckeditor\plugins\specialchar\dialogs\lang\fi.js" />
     <Content Include="Upload\ckeditor\plugins\specialchar\dialogs\lang\fr-ca.js" />
@@ -569,6 +596,7 @@
     <Content Include="Views\BackendArticle\_Create.cshtml" />
     <Content Include="Upload\ckeditor\CHANGES.md" />
     <Content Include="Upload\ckeditor\LICENSE.md" />
+    <Content Include="Upload\ckeditor\plugins\scayt\CHANGELOG.md" />
     <Content Include="Upload\ckeditor\plugins\scayt\LICENSE.md" />
     <Content Include="Upload\ckeditor\plugins\scayt\README.md" />
     <Content Include="Upload\ckeditor\plugins\wsc\LICENSE.md" />
@@ -583,9 +611,17 @@
     <Content Include="Upload\ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
     <Content Include="Upload\ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
     <Content Include="Upload\ckeditor\skins\moono\readme.md" />
+    <Content Include="Views\BackendExam\_Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ArticleRead\" />
+    <Folder Include="Views\ArticleRecord\" />
+    <Folder Include="Views\ArticleReplay\" />
+    <Folder Include="Views\BackEndPointCategory\" />
+    <Folder Include="Views\Base\" />
+    <Folder Include="Views\Examination\" />
+    <Folder Include="Views\PointCategory\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -597,6 +633,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201512180426192_InitialDB.resx">
       <DependentUpon>201512180426192_InitialDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512210350384_addNewTable.resx">
+      <DependentUpon>201512210350384_addNewTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512211100171_addTwoTable.resx">
+      <DependentUpon>201512211100171_addTwoTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -6,6 +6,9 @@ using System.Web;
 
 namespace YcuhForum.Models
 {
+    /// <summary>
+    /// 考試記錄
+    /// </summary>
     public class ExaminationRecord
     {
         [Key]

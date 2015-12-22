@@ -1,0 +1,41 @@
+﻿@model YcuhForum.Models.ExaminationModel
+
+@{
+    var exam_option = Newtonsoft.Json.JsonConvert.DeserializeObject<List<YcuhForum.Models.ExamOptionModel>>(Model.Examination_Question);
+    
+ }
+
+<table class="table table-striped table-bordered table-hover" ng-show="vm.isShow">
+    <thead>
+        <tr>
+            <th>編號</th>
+            <th>題目</th>
+            <th>選項</th>
+        </tr>
+    </thead>
+    <tbody>
+     @for (int i = 0; i < exam_option.Count; i++)
+     {
+        <tr>
+            <td>@i</td>
+            <td class="td_left">@exam_option[i].Question</td>
+            <td class="td_left">
+                @foreach (var item in exam_option[i].Options)
+                {
+                    if (item.Answer)
+                    {
+                        <span style="color:red;">@item.Option</span>
+                        <br />
+                    }
+                    else
+                    {
+                        <span>@item.Option</span>
+                        <br />
+                    }
+                }
+            </td>
+        </tr>
+     }
+    </tbody>
+  
+</table>

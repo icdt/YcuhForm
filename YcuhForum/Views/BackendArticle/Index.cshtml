@@ -1,13 +1,7 @@
 ﻿@model IPagedList<YcuhForum.Models.Article>
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
-
 <p>
-    <a href="#model" class="btn btn-default test fancybox" onclick="OpenCreate()">新增</a>
+    <a href="#model" class="btn btn-default test fancybox" onclick="gogoCreate()">新增</a>
 </p>
 <table class="table">
     <tr>
@@ -23,12 +17,7 @@
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().Article_Title)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().Article_Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().Article_Content)
-        </th>
+      
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().Article_File)
         </th>
@@ -42,66 +31,53 @@
             @Html.DisplayNameFor(model => model.FirstOrDefault().Article_OtherSiteUrl)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().Article_DelLock)
+            考題
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().Article_CreateTime)
-        </th>
-       
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Article_Creater)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Article_Group)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Article_Category)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Article_Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Article_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Article_Content)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Article_File)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Article_IsShow)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Article_IsReplay)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Article_OtherSiteUrl)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Article_DelLock)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Article_CreateTime)
-        </td>
-    
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Article_Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Article_Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Article_Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Article_Creater)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Article_Group)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Article_Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Article_Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Article_File)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Article_IsShow)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Article_IsReplay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Article_OtherSiteUrl)
+            </td>
+            <td>
+                <a href="#model" class="btn btn-default test fancybox" onclick="gogoExam('@item.Article_Id')">考題</a>
+            </td>
+            <td>
+                <a href="#model" class="btn btn-default test fancybox" onclick="gogoEdit('@item.Article_Id')">編輯</a> |
+
+                <a href="#" class="btn btn-default test" onclick="gogoDelete('@item.Article_Id')">刪除</a>
+            </td>
+        </tr>
+    }
 
 </table>
 
-<div id="model" class="model" style="display:none;">
-    @Html.Action("Create");
+<div id="model" class="model" style="display:none;width:80%" >
+    @*@Html.Action("Create");*@
 </div>
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 @section header{
@@ -120,7 +96,7 @@
             $(".fancybox").fancybox({
                 autoSize: false,
                 arrows: false,
-                width:'55%',
+                width: '55%',
                 openEffect: 'fade', //fade, elastic
                 closeEffect: 'fade', //fade, elastic
                 prevEffect: 'elastic',
@@ -145,13 +121,6 @@
                     //overlay: {
                     //    speedOut: 0
                     //}
-                },
-                afterLoad: function () {
-                    var editor = CKEDITOR.instances['Article_Content'];
-                    if (editor) {
-                        CKEDITOR.instances['Article_Content'].destroy();
-                    }
-                    CKEDITOR.replace('Article_Content');
                 }
             });
             /*關閉*/
@@ -163,8 +132,90 @@
         function OpenCreate() {
             $.fancybox.open();
         }
+
+
+        function gogoCreate(data) {
+            $.ajax({
+                type: "Get",
+                url: "@Url.Action("Create", "BackendArticle")",
+                success: function (data) {
+                    $("#model").html(data);
+                    doBack();
+                    $.fancybox.open();
+                },
+            error: function (xhr, status) {
+                alert(xhr.responseText);
+            }
+
+        });
+        }
+
+
+        function gogoEdit(data) {
+            $.ajax({
+                type: "Get",
+                url: "@Url.Action("Edit", "BackendArticle")" + "?id=" + data,
+                success: function (data) {
+
+                    $("#model").html(data);
+                    doBack();
+                    $.fancybox.open();
+                },
+                error: function (xhr, status) {
+                    alert(xhr.responseText);
+                }
+
+            });
+        }
+
+        function gogoDelete(data) {
+
+            if (confirm("確定刪除?")) {
+
+                $.ajax({
+                    type: "Post",
+                    url: "@Url.Action("Delete", "BackendArticle")" + "?id=" + data,
+                    success: function (data) {
+                        alert("刪除成功");
+                        window.location.reload();
+                    },
+                    error: function (xhr, status) {
+                        alert("系統忙碌中");
+                    }
+
+                 });
+            }
+            else {
+                return;
+            }
+        }
+
+
+        function gogoExam() {
+            $.ajax({
+                type: "Get",
+                url: "@Url.Action("Exam", "BackendArticle")" + "?id=" + data,
+                success: function (data) {
+
+                    $("#model").html(data);
+                    doBack();
+                    $.fancybox.open();
+                },
+            error: function (xhr, status) {
+                alert(xhr.responseText);
+            }
+
+        });
+        }
+        
+        function doBack() {
+            var editor = CKEDITOR.instances['Article_Content'];
+            if (editor) {
+                CKEDITOR.instances['Article_Content'].destroy();
+            }
+            CKEDITOR.replace('Article_Content');
+        }
+
+
     </script>
-
-
-
 }

@@ -6,6 +6,9 @@ using System.Web;
 
 namespace YcuhForum.Models
 {
+    /// <summary>
+    /// 客戶觀看記錄
+    /// </summary>
     public class ArticleUserRecord
     {
         [Key]
@@ -21,6 +24,10 @@ namespace YcuhForum.Models
 
         public DateTime ArticleUserRecord_UpdateTime { get; set; }
 
-        public string ArticleUserRecord_UserId { get; set; }
+        public bool ArticleUserRecord_DelLock { get; set; }
+
+        public string ArticleUserRecord_FK_UserId { get; set; }
+
+        public string ArticleUserRecord_FK_ArticleId { get; set; }
     }
 }

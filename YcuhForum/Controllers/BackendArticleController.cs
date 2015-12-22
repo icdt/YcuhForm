@@ -13,77 +13,113 @@ namespace YcuhForum.Controllers
         // GET: BackendArticle
         public ActionResult Index(int page = 1 )
         {
+          
             return View(ArticleManager.GetPagedList(page, 10));
         }
 
 
-        [ChildActionOnly]
-        public PartialViewResult Create()
+     
+        public string Create()
         {
+            TempData["isEdit"] = false;
             ArticleModel model = new ArticleModel();
             InitialViewModel(ref model);
-            return PartialView("_Create",model);
+            return Helper.RenderPartialTool.RenderPartialViewToString(this, "_Create",model);
+            //ArticleModel model = new ArticleModel();
+            //InitialViewModel(ref model);
+           // return PartialView("_Create",model);
         }
 
         // POST: BackendArticle/Create
         [HttpPost]
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Article article)
+        public ActionResult Create(ArticleModel articleModel,List<string> userIdList)
         {
             try
             {
-                // TODO: Add insert logic here
+                #region 文章
+                Article articleObj = ArticleManager.ModelToDomain(articleModel);
+                NewCreateModel(ref articleObj);
+                ArticleManager.Create(articleObj);
+                #endregion
 
+                #region 指定觀看
+                List<ArticleUserRecord> articleUserRecord = new List<ArticleUserRecord>();
+                for (int i = 0; i < userIdList.Count; i++)
+			    {
+                    ArticleUserRecord tempArticleUserRecord = new ArticleUserRecord();
+                    tempArticleUserRecord.ArticleUserRecord_Id = Guid.NewGuid().ToString();
+                    tempArticleUserRecord.ArticleUserRecord_ArticleGroup = articleObj.Article_Group;
+                    tempArticleUserRecord.ArticleUserRecord_ArticleTitle = articleObj.Article_Title;
+                    tempArticleUserRecord.ArticleUserRecord_ArticleCategory = articleObj.Article_Category;
+                    tempArticleUserRecord.ArticleUserRecord_CreateTime = DateTime.Now;
+                    tempArticleUserRecord.ArticleUserRecord_UpdateTime = new DateTime();
+                    tempArticleUserRecord.ArticleUserRecord_FK_ArticleId = articleObj.Article_Id;
+                    tempArticleUserRecord.ArticleUserRecord_FK_UserId = userIdList[i];
+                    articleUserRecord.Add(tempArticleUserRecord);
+			    }
+                ArticleUserRecordManager.Create(articleUserRecord);
+                
+                #endregion
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception e)
             {
-                return View();
+                return RedirectToAction("Index");
             }
         }
 
         // GET: BackendArticle/Edit/5
-        public ActionResult Edit(int id)
+        public string Edit(string id)
         {
-            return View();
+            TempData["isEdit"] = true;
+            return Helper.RenderPartialTool.RenderPartialViewToString(this, "_Create", ArticleManager.DomainToModel(ArticleManager.Get(id)));
+
         }
 
         // POST: BackendArticle/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateInput(false)]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(ArticleModel articleModel, List<string> userIdList)
         {
             try
             {
-                // TODO: Add update logic here
+                #region 文章修改
+                var articleObj = ArticleManager.ModelToDomain(articleModel);
+                ArticleManager.Update(articleObj);
+                #endregion
+
+                #region 修改指定觀看(若已觀看則不處理)
+                List<ArticleUserRecord> articleUserRecord;
+                var userEnforceList = ArticleUserRecordManager.getEnforceUser(articleObj.Article_Id);
+                articleUserRecord = userEnforceList.Where(a => userIdList.Any(b => a.ArticleUserRecord_FK_UserId == b) && a.ArticleUserRecord_UpdateTime == new DateTime()).ToList();
+                ArticleUserRecordManager.Remove(articleUserRecord);
+                #endregion
 
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index");
             }
         }
 
-        // GET: BackendArticle/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
+       
         // POST: BackendArticle/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(string id)
         {
             try
             {
-                // TODO: Add delete logic here
+                ArticleManager.Remove(ArticleManager.Get(id));
 
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.OK);
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
         }
 
@@ -91,6 +127,13 @@ namespace YcuhForum.Controllers
         private void InitialViewModel(ref ArticleModel articleModel)
         {
             articleModel.Article_Id = Guid.NewGuid().ToString();
+           
         }
+        private void NewCreateModel(ref Article article)
+        {
+            article.Article_CreateTime = DateTime.Now;
+            article.Article_UpdateTime = DateTime.Now;
+        }
+
     }
 }
