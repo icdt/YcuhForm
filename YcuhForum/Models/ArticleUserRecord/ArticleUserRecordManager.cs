@@ -88,12 +88,9 @@ namespace YcuhForum.Models
                 lock (_ArticleUserRecordQueueLock)
                 {
                     db.SaveChanges();
-
-                    foreach (var item in ArticleUserRecords)
-                    {
-                        _ArticleUserRecordCache.Remove(item);
-                    }
+                                      
                     //更新記憶体
+                    _ArticleUserRecordCache.RemoveAll(a => objIDs.Contains(a.ArticleUserRecord_Id));
                     _ArticleUserRecordCache.AddRange(ArticleUserRecords);
                 }
             }

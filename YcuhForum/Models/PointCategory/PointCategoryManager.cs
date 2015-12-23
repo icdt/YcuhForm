@@ -17,7 +17,7 @@ namespace YcuhForum.Models
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                _PointCategoryQueueLock = db.PointCategorys.ToList();
+                _PointCategoryCache = db.PointCategorys.ToList();
             }
         }
         #endregion
@@ -90,11 +90,8 @@ namespace YcuhForum.Models
                 {
                     db.SaveChanges();
 
-                    foreach (var item in PointCategorys)
-                    {
-                        _PointCategoryCache.Remove(item);
-                    }
                     //更新記憶体
+                    _PointCategoryCache.RemoveAll(a => objIDs.Contains(a.PointCategory_Id));
                     _PointCategoryCache.AddRange(PointCategorys);
                 }
             }

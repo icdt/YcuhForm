@@ -22,14 +22,24 @@ namespace YcuhForum.Models
 
         public bool ArticleUserRecord_IsEnforce { get; set; }
 
+        public bool ArticleUserRecord_DelLock { get; set; }
         public DateTime ArticleUserRecord_CreateTime { get; set; }
 
         public DateTime ArticleUserRecord_UpdateTime { get; set; }
 
-        public bool ArticleUserRecord_DelLock { get; set; }
+
 
         public string ArticleUserRecord_FK_UserId { get; set; }
+        public string ArticleUserRecord_FK_UpdateUserId { get; set; }
 
         public string ArticleUserRecord_FK_ArticleId { get; set; }
+
+        public ArticleUserRecord()
+        {
+            ArticleUserRecord_Id = Guid.NewGuid().ToString();
+            ArticleUserRecord_IsEnforce = false;
+            ArticleUserRecord_CreateTime = DateTime.Now;
+            ArticleUserRecord_UpdateTime = DateTime.Now;
+        }
     }
 }

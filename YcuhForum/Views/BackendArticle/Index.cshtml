@@ -5,7 +5,7 @@
 </p>
 <table class="table">
     <tr>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().Article_Creater)
         </th>
         <th>
@@ -13,19 +13,19 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().Article_Category)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().Article_Title)
         </th>
       
         <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().Article_File)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Article_FileUrl)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().Article_IsShow)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().Article_IsReplay)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Article_IsReply)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().Article_OtherSiteUrl)
@@ -39,7 +39,7 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Article_Creater)
             </td>
             <td>
@@ -47,18 +47,18 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Article_Category)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Article_Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Article_File)
+                @Html.DisplayFor(modelItem => item.Article_FileUrl)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Article_IsShow)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Article_IsReplay)
+                @Html.DisplayFor(modelItem => item.Article_IsReply)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Article_OtherSiteUrl)

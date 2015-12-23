@@ -22,14 +22,13 @@ namespace YcuhForum.Controllers
      
         public string Create()
         {
-            ViewBag.Action = "Create";
-            
+            ViewBag.Action = "Create";            
             ArticleModel model = new ArticleModel();
-            InitialViewModel(ref model);
+            ViewBag.PointCategorySelector = PreparePointCategorySelectList(null);
+            ViewBag.ArticleGroupSelector = PrepareArticleGroupSelectList(null);
+           
             return RenderPartialTool.RenderPartialViewToString(this, "_Create",model);
-            //ArticleModel model = new ArticleModel();
-            //InitialViewModel(ref model);
-           // return PartialView("_Create",model);
+          
         }
 
         // POST: BackendArticle/Create
@@ -41,8 +40,10 @@ namespace YcuhForum.Controllers
             try
             {
                 #region 文章
+                //更新時間
+                articleModel.Article_CreateTime = DateTime.Now;
+                articleModel.Article_UpdateTime = DateTime.Now;
                 Article articleObj = ArticleManager.ModelToDomain(articleModel);
-                NewCreateModel(ref articleObj);
                 ArticleManager.Create(articleObj);
                 #endregion
 
@@ -52,9 +53,9 @@ namespace YcuhForum.Controllers
 			    {
                     ArticleUserRecord tempArticleUserRecord = new ArticleUserRecord();
                     tempArticleUserRecord.ArticleUserRecord_Id = Guid.NewGuid().ToString();
-                    tempArticleUserRecord.ArticleUserRecord_ArticleGroup = articleObj.Article_FK_GroupId;
-                    tempArticleUserRecord.ArticleUserRecord_ArticleTitle = articleObj.Article_Title;
-                    tempArticleUserRecord.ArticleUserRecord_ArticleCategory = articleObj.Article_FK_GroupId;
+                    //tempArticleUserRecord.ArticleUserRecord_ArticleGroup = articleObj.Article_FK_ArticleGroupId;
+                    //tempArticleUserRecord.ArticleUserRecord_ArticleTitle = articleObj.Article_Title;
+                    //tempArticleUserRecord.ArticleUserRecord_ArticleCategory = articleObj.Article_FK_ArticleGroupId;
                     tempArticleUserRecord.ArticleUserRecord_CreateTime = DateTime.Now;
                     tempArticleUserRecord.ArticleUserRecord_UpdateTime = new DateTime();
                     tempArticleUserRecord.ArticleUserRecord_FK_ArticleId = articleObj.Article_Id;
@@ -76,7 +77,10 @@ namespace YcuhForum.Controllers
         public string Edit(string id)
         {
             ViewBag.Action = "Edit";
-            return Helper.RenderPartialTool.RenderPartialViewToString(this, "_Create", ArticleManager.DomainToModel(ArticleManager.Get(id)));
+            var targetObj =  ArticleManager.DomainToModel(ArticleManager.Get(id));
+            ViewBag.PointCategorySelector = PreparePointCategorySelectList(targetObj.Article_FK_PointCategoryId);
+            ViewBag.ArticleGroupSelector = PrepareArticleGroupSelectList(targetObj.Article_FK_ArticleGroupId);
+           return Helper.RenderPartialTool.RenderPartialViewToString(this, "_Create", targetObj);
 
         }
 
@@ -94,10 +98,29 @@ namespace YcuhForum.Controllers
                 #endregion
 
                 #region 修改指定觀看(若已觀看則不處理)
-                List<ArticleUserRecord> articleUserRecord;
+                List<ArticleUserRecord> articleUserRecordRemoveList = new List<ArticleUserRecord>();
+                List<ArticleUserRecord> articleUserRecordCreteList = new List<ArticleUserRecord>();
                 var userEnforceList = ArticleUserRecordManager.getEnforceUser(articleObj.Article_Id);
-                articleUserRecord = userEnforceList.Where(a => userIdList.Any(b => a.ArticleUserRecord_FK_UserId != b) && a.ArticleUserRecord_UpdateTime == new DateTime()).ToList();
-                ArticleUserRecordManager.Remove(articleUserRecord);
+                //有比對到就刪除,沒有就新增
+                foreach (var item in userIdList)
+                {
+                    var targetObj = userEnforceList.Where(a=> userIdList.Any(b=> b == a.ArticleUserRecord_FK_UserId)).FirstOrDefault();
+                    if (targetObj == null)
+                    {
+                         ArticleUserRecord newArticleUserRecord = new ArticleUserRecord();
+                         newArticleUserRecord.ArticleUserRecord_FK_ArticleId = articleModel.Article_Id;
+                         newArticleUserRecord.ArticleUserRecord_FK_UserId = item;
+                         newArticleUserRecord.ArticleUserRecord_CreateTime = DateTime.Now;
+                         newArticleUserRecord.ArticleUserRecord_UpdateTime = DateTime.Now;
+                         newArticleUserRecord.ArticleUserRecord_IsEnforce = true;
+                         articleUserRecordCreteList.Add(newArticleUserRecord);
+                       
+                    }
+                    else
+                    {
+                        articleUserRecordRemoveList.Add(targetObj);
+                    }
+                }
                 #endregion
 
                 return RedirectToAction("Index");
@@ -125,17 +148,40 @@ namespace YcuhForum.Controllers
             }
         }
 
-
-        private void InitialViewModel(ref ArticleModel articleModel)
+        #region 下拉選單
+        private List<SelectListItem> PreparePointCategorySelectList(string selectedPointCategoryId)
         {
-            articleModel.Article_Id = Guid.NewGuid().ToString();
-           
-        }
-        private void NewCreateModel(ref Article article)
-        {
-            article.Article_CreateTime = DateTime.Now;
-            article.Article_UpdateTime = DateTime.Now;
+            var pointCategory = PointCategoryManager.GetAll();
+            List<SelectListItem> pointSeletor = new List<SelectListItem>();
+            foreach (var item in pointCategory)
+            {
+                pointSeletor.Add(new SelectListItem()
+                {
+                    Text = item.PointCategory_Name,
+                    Value = item.PointCategory_Id.ToString(),
+                    Selected = (item.PointCategory_Id == selectedPointCategoryId)
+                });
+            }
+            return pointSeletor;
         }
 
+        private List<SelectListItem> PrepareArticleGroupSelectList(string selectedArticleGroupId)
+        {
+            var articleGroup = ArticleGroupManager.GetAll();
+            List<SelectListItem> articleGroupSeletor = new List<SelectListItem>();
+            foreach (var item in articleGroup)
+            {
+                articleGroupSeletor.Add(new SelectListItem()
+                {
+                    Text = item.ArticleGroup_Name,
+                    Value = item.ArticleGroup_Id.ToString(),
+                    Selected = (item.ArticleGroup_Id == selectedArticleGroupId)
+                });
+            }
+            return articleGroupSeletor;
+        }
+        #endregion
+
+       
     }
 }

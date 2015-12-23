@@ -9,13 +9,7 @@ namespace YcuhForum.Models
     public class Article
     {
         [Key]
-        public string Article_Id { get; set; }
-
-        public string Article_FK_UserId { get; set; }
-       
-        public string Article_FK_GroupId { get; set; }
-
-        public string Article_FK_PointCategoryId { get; set; }
+        public string Article_Id { get; set; }   
 
         public string Article_Title { get; set; }
 
@@ -39,7 +33,26 @@ namespace YcuhForum.Models
 
         public string Article_FK_UpdateUserId { get; set; }
 
-        //補建構子
+        public string Article_FK_UserId { get; set; }
+
+        public string Article_FK_ArticleGroupId { get; set; }
+
+        public string Article_FK_PointCategoryId { get; set; }
+
+        
+        public Article()
+        {
+            Article_Id = Guid.NewGuid().ToString();
+            Article_Title = string.Empty;
+            Article_Content = string.Empty;
+            Article_FileUrl = string.Empty;
+            Article_OtherSiteUrl = string.Empty;
+            Article_IsShow = true;
+            Article_IsReply = true;
+            Article_CreateTime = DateTime.Now;
+            Article_UpdateTime = DateTime.Now;
+        }
+   
     }
 
 }

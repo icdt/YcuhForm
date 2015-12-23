@@ -22,6 +22,8 @@ namespace YcuhForum
 
             #region 快取
             ArticleManager.Initial();
+            PointCategoryManager.Initial();
+            ArticleGroupManager.Initial();
             #endregion
 
         }

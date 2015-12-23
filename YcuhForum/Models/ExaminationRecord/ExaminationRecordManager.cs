@@ -90,11 +90,8 @@ namespace YcuhForum.Models
                 {
                     db.SaveChanges();
 
-                    foreach (var item in ExaminationRecords)
-                    {
-                        _ExaminationRecordCache.Remove(item);
-                    }
                     //更新記憶体
+                    _ExaminationRecordCache.RemoveAll(a => objIDs.Contains(a.ExaminationRecord_Id));
                     _ExaminationRecordCache.AddRange(ExaminationRecords);
                 }
             }

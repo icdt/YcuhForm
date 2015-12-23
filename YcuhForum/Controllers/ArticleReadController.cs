@@ -13,7 +13,7 @@ namespace YcuhForum.Controllers
         public ActionResult Index()
         {
             var tempData = ArticleManager.getArticleByUser(groupList);
-            return View(tempData.GroupBy(a => a.Article_Group));
+            return View(tempData.GroupBy(a => a.Article_FK_ArticleGroupId));
         }
 
         //單篇文章      
@@ -23,6 +23,7 @@ namespace YcuhForum.Controllers
             {
                 var catcheData = ArticleManager.Get(id);
                 var viewData = ArticleManager.DomainToModel(catcheData);
+                GetUserJobTitleAndArticleGroupNameAndPoingCatgoryName(ref viewData);
                 return View(viewData);
             }
             catch (Exception)
@@ -95,5 +96,25 @@ namespace YcuhForum.Controllers
                 return View();
             }
         }
+
+
+        #region 
+
+        private void GetUserJobTitleAndArticleGroupNameAndPoingCatgoryName(ref ArticleModel articleModel)
+        {
+            //職務
+            var userObj = AUManager.Get(articleModel.Article_FK_UserId);
+            articleModel.Article_UserJobTitle = userObj.ApplicationUser_Job;
+
+            //群組
+            var articleGroup = ArticleGroupManager.Get(articleModel.Article_FK_ArticleGroupId);
+            articleModel.Article_ArticleGroupName = articleGroup.ArticleGroup_Name;
+
+            //點數
+            var pointCategory = PointCategoryManager.Get(articleModel.Article_FK_PointCategoryId);
+            articleModel.Article_PointCategoryName = pointCategory.PointCategory_Name;
+        }
+
+        #endregion
     }
 }

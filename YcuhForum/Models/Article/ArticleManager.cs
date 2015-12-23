@@ -90,7 +90,7 @@ namespace YcuhForum.Models
 
                     item.Article_FileUrl = theNewFromOutside.Article_FileUrl;
 
-                    item.Article_FK_GroupId = theNewFromOutside.Article_FK_GroupId;
+                    item.Article_FK_ArticleGroupId = theNewFromOutside.Article_FK_ArticleGroupId;
 
                     item.Article_IsReply = theNewFromOutside.Article_IsReply;
 
@@ -102,19 +102,15 @@ namespace YcuhForum.Models
 
                     item.Article_UpdateTime = DateTime.Now;
 
-                   
 
                 }
 
                 lock (_ArticleQueueLock)
                 {
                     db.SaveChanges();
-                    //有問題須修改
-                    foreach (var item in articles)
-                    {
-                        _ArticleCache.Remove(item);
-                    }
+                   
                     //更新記憶体
+                    _ArticleCache.RemoveAll(a => objIDs.Contains(a.Article_Id));
                     _ArticleCache.AddRange(articles);
                 }
             }
@@ -189,7 +185,7 @@ namespace YcuhForum.Models
         #region 進階查詢
         public static List<Article> getArticleByUser(List<string> groupList)
         {
-            return _ArticleCache.Where(a => groupList.Any(b => a.Article_FK_GroupId == b) && a.Article_IsShow && !a.Article_DelLock).OrderByDescending(a => a.Article_CreateTime).ToList();
+            return _ArticleCache.Where(a => groupList.Any(b => a.Article_FK_ArticleGroupId == b) && a.Article_IsShow && !a.Article_DelLock).OrderByDescending(a => a.Article_CreateTime).ToList();
         }
 
 

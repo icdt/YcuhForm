@@ -191,20 +191,17 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\RenderPartialTool.cs" />
-    <Compile Include="Migrations\201512180426192_InitialDB.cs" />
-    <Compile Include="Migrations\201512180426192_InitialDB.Designer.cs">
-      <DependentUpon>201512180426192_InitialDB.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201512210350384_addNewTable.cs" />
-    <Compile Include="Migrations\201512210350384_addNewTable.Designer.cs">
-      <DependentUpon>201512210350384_addNewTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201512211100171_addTwoTable.cs" />
-    <Compile Include="Migrations\201512211100171_addTwoTable.Designer.cs">
-      <DependentUpon>201512211100171_addTwoTable.cs</DependentUpon>
+    <Compile Include="Migrations\201512230909404_InitDB.cs" />
+    <Compile Include="Migrations\201512230909404_InitDB.Designer.cs">
+      <DependentUpon>201512230909404_InitDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ApplicationUser\ApplicationUser.cs" />
+    <Compile Include="Models\ApplicationUser\AUManager.cs" />
+    <Compile Include="Models\ArticleGroup\ArticleGroup.cs" />
+    <Compile Include="Models\ArticleGroup\ArticleGroupManager.cs" />
+    <Compile Include="Models\ArticleGroup\ArticleGroupModel.cs" />
     <Compile Include="Models\ArticleUserRecord\ArticleUserRecord.cs" />
     <Compile Include="Models\ArticleUserRecord\ArticleUserRecordManager.cs" />
     <Compile Include="Models\ArticleUserRecord\ArticleUserRecordModel.cs" />
@@ -631,14 +628,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201512180426192_InitialDB.resx">
-      <DependentUpon>201512180426192_InitialDB.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512210350384_addNewTable.resx">
-      <DependentUpon>201512210350384_addNewTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512211100171_addTwoTable.resx">
-      <DependentUpon>201512211100171_addTwoTable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201512230909404_InitDB.resx">
+      <DependentUpon>201512230909404_InitDB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

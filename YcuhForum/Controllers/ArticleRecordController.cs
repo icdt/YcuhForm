@@ -91,9 +91,9 @@ namespace YcuhForum.Controllers
             var articleData  = ArticleManager.Get(article);
             if (articleData != null)
             {
-                articleUserRecordModel.ArticleUserRecord_ArticleCategory = articleData.Article_Category;
-                articleUserRecordModel.ArticleUserRecord_ArticleGroup = articleData.Article_Group;
-                articleUserRecordModel.ArticleUserRecord_ArticleTitle = articleData.Article_Title;
+                //articleUserRecordModel.ArticleUserRecord_ArticleCategory = articleData.Article_FK_PointCategoryId;
+                //articleUserRecordModel.ArticleUserRecord_ArticleGroup = articleData.Article_FK_ArticleGroupId;
+                //articleUserRecordModel.ArticleUserRecord_ArticleTitle = articleData.Article_Title;
             }
            
         }

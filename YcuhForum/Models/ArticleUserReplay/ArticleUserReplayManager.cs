@@ -90,11 +90,8 @@ namespace YcuhForum.Models
                 {
                     db.SaveChanges();
 
-                    foreach (var item in ArticleUserReplays)
-                    {
-                        _ArticleUserReplayCache.Remove(item);
-                    }
                     //更新記憶体
+                    _ArticleUserReplayCache.RemoveAll(a => objIDs.Contains(a.ArticleUserReplay_Id));
                     _ArticleUserReplayCache.AddRange(ArticleUserReplays);
                 }
             }

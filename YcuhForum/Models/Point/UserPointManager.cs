@@ -90,11 +90,8 @@ namespace YcuhForum.Models
                 {
                     db.SaveChanges();
 
-                    foreach (var item in UserPoints)
-                    {
-                        _UserPointCache.Remove(item);
-                    }
                     //更新記憶体
+                    _UserPointCache.RemoveAll(a => objIDs.Contains(a.UserPoint_Id));
                     _UserPointCache.AddRange(UserPoints);
                 }
             }
