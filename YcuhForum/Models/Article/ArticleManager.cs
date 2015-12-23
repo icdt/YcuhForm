@@ -42,57 +42,57 @@ namespace YcuhForum.Models
         }
 
         //新增單一記錄
-        public static void Create(Article Article)
+        public static void Create(Article article)
         {
-            Create(new List<Article>() { Article });
+            Create(new List<Article>() { article });
         }
 
         //新增多筆記錄
-        public static void Create(List<Article> Articles)
+        public static void Create(List<Article> articles)
         {
             //更新資料庫
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 lock (_ArticleQueueLock)
                 {
-                    db.Articles.AddRange(Articles);
+                    db.Articles.AddRange(articles);
                     db.SaveChanges();
                     //更新記憶体
-                    _ArticleCache.AddRange(Articles);
+                    _ArticleCache.AddRange(articles);
                 }
             }
         }
 
         //更新一筆記錄
-        public static void Update(Article Articles)
+        public static void Update(Article articles)
         {
-            Update(new List<Article>() { Articles });
+            Update(new List<Article>() { articles });
         }
 
         //更新多筆記錄
-        public static void Update(List<Article> Articles)
+        public static void Update(List<Article> articles)
         {
             //更新資料庫
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                var objIDs = Articles.Select(a => a.Article_Id).ToList();
+                var objIDs = articles.Select(a => a.Article_Id).ToList();
                 var objInDB = db.Articles.Where(a => objIDs.Contains(a.Article_Id)).ToList();
 
                 foreach (Article item in objInDB)
                 {
-                    var theNewFromOutside = Articles.FirstOrDefault(a => a.Article_Id == item.Article_Id);
+                    var theNewFromOutside = articles.FirstOrDefault(a => a.Article_Id == item.Article_Id);
 
-                    item.Article_Category = theNewFromOutside.Article_Category;
+                    item.Article_FK_PointCategoryId = theNewFromOutside.Article_FK_PointCategoryId;
 
                     item.Article_Content = theNewFromOutside.Article_Content;
 
                     item.Article_DelLock = theNewFromOutside.Article_DelLock;
 
-                    item.Article_File = theNewFromOutside.Article_File;
+                    item.Article_FileUrl = theNewFromOutside.Article_FileUrl;
 
-                    item.Article_Group = theNewFromOutside.Article_Group;
+                    item.Article_FK_GroupId = theNewFromOutside.Article_FK_GroupId;
 
-                    item.Article_IsReplay = theNewFromOutside.Article_IsReplay;
+                    item.Article_IsReply = theNewFromOutside.Article_IsReply;
 
                     item.Article_IsShow = theNewFromOutside.Article_IsShow;
                     
@@ -102,37 +102,37 @@ namespace YcuhForum.Models
 
                     item.Article_UpdateTime = DateTime.Now;
 
-                    Mapper.Map(theNewFromOutside, item);
+                   
 
                 }
 
                 lock (_ArticleQueueLock)
                 {
                     db.SaveChanges();
-
-                    foreach (var item in Articles)
+                    //有問題須修改
+                    foreach (var item in articles)
                     {
                         _ArticleCache.Remove(item);
                     }
                     //更新記憶体
-                    _ArticleCache.AddRange(Articles);
+                    _ArticleCache.AddRange(articles);
                 }
             }
         }
 
         //刪除一筆記錄
-        public static void Remove(Article Article)
+        public static void Remove(Article article)
         {
-            Remove(new List<Article>() { Article });
+            Remove(new List<Article>() { article });
         }
 
         //刪除多筆記錄
-        public static void Remove(List<Article> Articles)
+        public static void Remove(List<Article> articles)
         {
             //更新資料庫
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                var objIDs = Articles.Select(a => a.Article_Id).ToList();
+                var objIDs = articles.Select(a => a.Article_Id).ToList();
                 var objInDB = db.Articles.Where(a => objIDs.Contains(a.Article_Id)).ToList();
 
                 foreach (var item in objInDB)
@@ -145,8 +145,9 @@ namespace YcuhForum.Models
                     db.SaveChanges();
 
                     //更新記憶体
-                    foreach (var item in Articles)
+                    foreach (var item in articles)
                     {
+                        //有問題須修改
                         _ArticleCache.Remove(item);
                     }
                 }
@@ -188,8 +189,10 @@ namespace YcuhForum.Models
         #region 進階查詢
         public static List<Article> getArticleByUser(List<string> groupList)
         {
-            return _ArticleCache.Where(a => groupList.Any(b => a.Article_Group == b) && a.Article_IsShow && !a.Article_DelLock).OrderByDescending(a => a.Article_CreateTime).ToList();
+            return _ArticleCache.Where(a => groupList.Any(b => a.Article_FK_GroupId == b) && a.Article_IsShow && !a.Article_DelLock).OrderByDescending(a => a.Article_CreateTime).ToList();
         }
+
+
         #endregion
     }
 }

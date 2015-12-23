@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using YcuhForum.Models;
+using YcuhForum.Helper;
 
 namespace YcuhForum.Controllers
 {
@@ -21,10 +22,11 @@ namespace YcuhForum.Controllers
      
         public string Create()
         {
-            TempData["isEdit"] = false;
+            ViewBag.Action = "Create";
+            
             ArticleModel model = new ArticleModel();
             InitialViewModel(ref model);
-            return Helper.RenderPartialTool.RenderPartialViewToString(this, "_Create",model);
+            return RenderPartialTool.RenderPartialViewToString(this, "_Create",model);
             //ArticleModel model = new ArticleModel();
             //InitialViewModel(ref model);
            // return PartialView("_Create",model);
@@ -50,9 +52,9 @@ namespace YcuhForum.Controllers
 			    {
                     ArticleUserRecord tempArticleUserRecord = new ArticleUserRecord();
                     tempArticleUserRecord.ArticleUserRecord_Id = Guid.NewGuid().ToString();
-                    tempArticleUserRecord.ArticleUserRecord_ArticleGroup = articleObj.Article_Group;
+                    tempArticleUserRecord.ArticleUserRecord_ArticleGroup = articleObj.Article_FK_GroupId;
                     tempArticleUserRecord.ArticleUserRecord_ArticleTitle = articleObj.Article_Title;
-                    tempArticleUserRecord.ArticleUserRecord_ArticleCategory = articleObj.Article_Category;
+                    tempArticleUserRecord.ArticleUserRecord_ArticleCategory = articleObj.Article_FK_GroupId;
                     tempArticleUserRecord.ArticleUserRecord_CreateTime = DateTime.Now;
                     tempArticleUserRecord.ArticleUserRecord_UpdateTime = new DateTime();
                     tempArticleUserRecord.ArticleUserRecord_FK_ArticleId = articleObj.Article_Id;
@@ -73,7 +75,7 @@ namespace YcuhForum.Controllers
         // GET: BackendArticle/Edit/5
         public string Edit(string id)
         {
-            TempData["isEdit"] = true;
+            ViewBag.Action = "Edit";
             return Helper.RenderPartialTool.RenderPartialViewToString(this, "_Create", ArticleManager.DomainToModel(ArticleManager.Get(id)));
 
         }
@@ -94,7 +96,7 @@ namespace YcuhForum.Controllers
                 #region 修改指定觀看(若已觀看則不處理)
                 List<ArticleUserRecord> articleUserRecord;
                 var userEnforceList = ArticleUserRecordManager.getEnforceUser(articleObj.Article_Id);
-                articleUserRecord = userEnforceList.Where(a => userIdList.Any(b => a.ArticleUserRecord_FK_UserId == b) && a.ArticleUserRecord_UpdateTime == new DateTime()).ToList();
+                articleUserRecord = userEnforceList.Where(a => userIdList.Any(b => a.ArticleUserRecord_FK_UserId != b) && a.ArticleUserRecord_UpdateTime == new DateTime()).ToList();
                 ArticleUserRecordManager.Remove(articleUserRecord);
                 #endregion
 

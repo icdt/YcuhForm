@@ -19,7 +19,11 @@ namespace YcuhForum
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            #region 快取
             ArticleManager.Initial();
+            #endregion
+
         }
     }
 }

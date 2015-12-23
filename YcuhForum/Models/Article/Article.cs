@@ -11,21 +11,23 @@ namespace YcuhForum.Models
         [Key]
         public string Article_Id { get; set; }
 
-        public string Article_Creater { get; set; }
+        public string Article_FK_UserId { get; set; }
+       
+        public string Article_FK_GroupId { get; set; }
 
-        public string Article_Group { get; set; }
-
-        public string Article_Category { get; set; }
+        public string Article_FK_PointCategoryId { get; set; }
 
         public string Article_Title { get; set; }
 
         public string Article_Content { get; set; }
 
-        public string Article_File { get; set; }
+        public int Article_Point { get; set; }
+
+        public string Article_FileUrl { get; set; }
 
         public bool Article_IsShow { get; set; }
 
-        public bool Article_IsReplay { get; set; }
+        public bool Article_IsReply { get; set; }
 
         public string Article_OtherSiteUrl { get; set; }
 
@@ -35,6 +37,9 @@ namespace YcuhForum.Models
 
         public DateTime Article_UpdateTime { get; set; }
 
-        public int Article_Point { get; set; }
+        public string Article_FK_UpdateUserId { get; set; }
+
+        //補建構子
     }
+
 }

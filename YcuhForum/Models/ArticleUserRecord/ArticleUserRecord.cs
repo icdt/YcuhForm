@@ -14,11 +14,13 @@ namespace YcuhForum.Models
         [Key]
         public string ArticleUserRecord_Id { get; set; }
 
-        public string ArticleUserRecord_ArticleGroup { get; set; }
+        //public string ArticleUserRecord_ArticleGroup { get; set; }
 
-        public string ArticleUserRecord_ArticleCategory { get; set; }
+        //public string ArticleUserRecord_ArticleCategory { get; set; }
 
-        public string ArticleUserRecord_ArticleTitle { get; set; }
+        //public string ArticleUserRecord_ArticleTitle { get; set; }
+
+        public bool ArticleUserRecord_IsEnforce { get; set; }
 
         public DateTime ArticleUserRecord_CreateTime { get; set; }
 
