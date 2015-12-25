@@ -34,9 +34,12 @@ namespace YcuhForum.Models
         public DbSet<ArticleUserReplay> ArticleUserReplays { get; set; }
 
         public DbSet<ArticleGroup> ArticleGroups { get; set; }
-        
 
-        
+        public DbSet<ErrorRecord> ErrorRecords { get; set; }
 
+        public DbSet<AuthOption> AuthOptions { get; set; }
+        
+        
+        
     }
 }

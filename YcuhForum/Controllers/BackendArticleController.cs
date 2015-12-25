@@ -14,7 +14,6 @@ namespace YcuhForum.Controllers
         // GET: BackendArticle
         public ActionResult Index(int page = 1 )
         {
-          
             return View(ArticleManager.GetPagedList(page, 10));
         }
 
@@ -48,27 +47,18 @@ namespace YcuhForum.Controllers
                 #endregion
 
                 #region 指定觀看
-                List<ArticleUserRecord> articleUserRecord = new List<ArticleUserRecord>();
-                for (int i = 0; i < userIdList.Count; i++)
-			    {
-                    ArticleUserRecord tempArticleUserRecord = new ArticleUserRecord();
-                    tempArticleUserRecord.ArticleUserRecord_Id = Guid.NewGuid().ToString();
-                    //tempArticleUserRecord.ArticleUserRecord_ArticleGroup = articleObj.Article_FK_ArticleGroupId;
-                    //tempArticleUserRecord.ArticleUserRecord_ArticleTitle = articleObj.Article_Title;
-                    //tempArticleUserRecord.ArticleUserRecord_ArticleCategory = articleObj.Article_FK_ArticleGroupId;
-                    tempArticleUserRecord.ArticleUserRecord_CreateTime = DateTime.Now;
-                    tempArticleUserRecord.ArticleUserRecord_UpdateTime = new DateTime();
-                    tempArticleUserRecord.ArticleUserRecord_FK_ArticleId = articleObj.Article_Id;
-                    tempArticleUserRecord.ArticleUserRecord_FK_UserId = userIdList[i];
-                    articleUserRecord.Add(tempArticleUserRecord);
-			    }
-                ArticleUserRecordManager.Create(articleUserRecord);
-                
+                SetEnforce(articleObj.Article_Id, userIdList);
                 #endregion
                 return RedirectToAction("Index");
             }
             catch(Exception e)
             {
+                ErrorRecord newErrorRecord = new ErrorRecord();
+                newErrorRecord.ErrorRecord_SystemMessage = e.Message;
+                newErrorRecord.ErrorRecord_ActionDescribe = "文章新增異常";
+                var actionStr = Newtonsoft.Json.JsonConvert.SerializeObject(articleModel);
+                newErrorRecord.ErrorRecord_CustomedMessage = actionStr;
+                ErrorTool.RecordByDB(newErrorRecord);
                 return RedirectToAction("Index");
             }
         }
@@ -98,35 +88,19 @@ namespace YcuhForum.Controllers
                 #endregion
 
                 #region 修改指定觀看(若已觀看則不處理)
-                List<ArticleUserRecord> articleUserRecordRemoveList = new List<ArticleUserRecord>();
-                List<ArticleUserRecord> articleUserRecordCreteList = new List<ArticleUserRecord>();
-                var userEnforceList = ArticleUserRecordManager.getEnforceUser(articleObj.Article_Id);
-                //有比對到就刪除,沒有就新增
-                foreach (var item in userIdList)
-                {
-                    var targetObj = userEnforceList.Where(a=> userIdList.Any(b=> b == a.ArticleUserRecord_FK_UserId)).FirstOrDefault();
-                    if (targetObj == null)
-                    {
-                         ArticleUserRecord newArticleUserRecord = new ArticleUserRecord();
-                         newArticleUserRecord.ArticleUserRecord_FK_ArticleId = articleModel.Article_Id;
-                         newArticleUserRecord.ArticleUserRecord_FK_UserId = item;
-                         newArticleUserRecord.ArticleUserRecord_CreateTime = DateTime.Now;
-                         newArticleUserRecord.ArticleUserRecord_UpdateTime = DateTime.Now;
-                         newArticleUserRecord.ArticleUserRecord_IsEnforce = true;
-                         articleUserRecordCreteList.Add(newArticleUserRecord);
-                       
-                    }
-                    else
-                    {
-                        articleUserRecordRemoveList.Add(targetObj);
-                    }
-                }
+                UpdateEnforce(articleObj.Article_Id, userIdList);
                 #endregion
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception e)
             {
+                ErrorRecord newErrorRecord = new ErrorRecord();
+                newErrorRecord.ErrorRecord_SystemMessage = e.Message;
+                newErrorRecord.ErrorRecord_ActionDescribe = "文章修改異常";
+                var actionStr = Newtonsoft.Json.JsonConvert.SerializeObject(articleModel);
+                newErrorRecord.ErrorRecord_CustomedMessage = actionStr;
+                ErrorTool.RecordByDB(newErrorRecord);
                 return RedirectToAction("Index");
             }
         }
@@ -182,6 +156,80 @@ namespace YcuhForum.Controllers
         }
         #endregion
 
-       
+
+        #region 觀看者指定修改
+
+        private void SetEnforce(string articleId, List<string> userIdList)
+        {
+            try
+            {
+                List<ArticleUserRecord> articleUserRecord = new List<ArticleUserRecord>();
+                for (int i = 0; i < userIdList.Count; i++)
+                {
+                    ArticleUserRecord tempArticleUserRecord = new ArticleUserRecord();
+                    tempArticleUserRecord.ArticleUserRecord_Id = Guid.NewGuid().ToString();
+                    tempArticleUserRecord.ArticleUserRecord_CreateTime = DateTime.Now;
+                    tempArticleUserRecord.ArticleUserRecord_UpdateTime = new DateTime();
+                    tempArticleUserRecord.ArticleUserRecord_FK_ArticleId = articleId;
+                    tempArticleUserRecord.ArticleUserRecord_FK_UserId = userIdList[i];
+                    articleUserRecord.Add(tempArticleUserRecord);
+                }
+                ArticleUserRecordManager.Create(articleUserRecord);
+            }
+            catch (Exception e)
+            {
+                ErrorRecord newErrorRecord = new ErrorRecord();
+                newErrorRecord.ErrorRecord_SystemMessage = e.Message;
+                newErrorRecord.ErrorRecord_ActionDescribe = "指定觀看新增異常";
+                var userStr = Newtonsoft.Json.JsonConvert.SerializeObject(userIdList);
+                var actionStr = "目標文章:" + articleId + "目標資料:" + userStr;
+                newErrorRecord.ErrorRecord_CustomedMessage = actionStr;
+                ErrorTool.RecordByDB(newErrorRecord);
+            }
+          
+        }
+
+        private void UpdateEnforce(string articleId, List<string> userIdList)
+        {
+            try
+            {
+                List<ArticleUserRecord> articleUserRecordRemoveList = new List<ArticleUserRecord>();
+                List<ArticleUserRecord> articleUserRecordCreteList = new List<ArticleUserRecord>();
+                var userEnforceList = ArticleUserRecordManager.getEnforceUser(articleId);
+                //有比對到就刪除,沒有就新增
+                foreach (var item in userIdList)
+                {
+                    var targetObj = userEnforceList.Where(a => userIdList.Any(b => b == a.ArticleUserRecord_FK_UserId)).FirstOrDefault();
+                    if (targetObj == null)
+                    {
+                        ArticleUserRecord newArticleUserRecord = new ArticleUserRecord();
+                        newArticleUserRecord.ArticleUserRecord_FK_ArticleId = articleId;
+                        newArticleUserRecord.ArticleUserRecord_FK_UserId = item;
+                        newArticleUserRecord.ArticleUserRecord_CreateTime = DateTime.Now;
+                        newArticleUserRecord.ArticleUserRecord_UpdateTime = DateTime.Now;
+                        newArticleUserRecord.ArticleUserRecord_IsEnforce = true;
+                        articleUserRecordCreteList.Add(newArticleUserRecord);
+                    }
+                    else
+                    {
+                        articleUserRecordRemoveList.Add(targetObj);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                ErrorRecord newErrorRecord = new ErrorRecord();
+                newErrorRecord.ErrorRecord_SystemMessage = e.Message;
+                newErrorRecord.ErrorRecord_ActionDescribe = "指定觀看修改異常";
+                var userStr = Newtonsoft.Json.JsonConvert.SerializeObject(userIdList);
+                var actionStr = "目標文章:" + articleId + "目標資料:" + userStr;
+                newErrorRecord.ErrorRecord_CustomedMessage = actionStr;
+                ErrorTool.RecordByDB(newErrorRecord);
+            }
+
+
+        }
+        #endregion
+
     }
 }

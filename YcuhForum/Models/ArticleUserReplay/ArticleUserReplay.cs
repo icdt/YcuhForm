@@ -26,9 +26,13 @@ namespace YcuhForum.Models
         public DateTime ArticleUserReplay_UpdateTime { get; set; }
 
         public string ArticleUserReplay_FK_UserId { get; set; }
-        public string Article_FK_UpdateUserId { get; set; }
+
+        public string ArticleUserReplay_FK_UpdateUserId { get; set; }
 
         public string ArticleUserReplay_FK_ArticleId { get; set; }
+
+        public string ArticleUserReplay_ParentId { get; set; }
+
 
         public ArticleUserReplay()
         {

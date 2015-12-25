@@ -116,11 +116,9 @@ namespace YcuhForum.Models
                 {
                     db.SaveChanges();
 
+                  
                     //更新記憶体
-                    foreach (var item in UserPoints)
-                    {
-                        _UserPointCache.Remove(item);
-                    }
+                    _UserPointCache.RemoveAll(a => objIDs.Contains(a.UserPoint_Id));
                 }
             }
         }

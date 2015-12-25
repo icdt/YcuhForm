@@ -117,10 +117,7 @@ namespace YcuhForum.Models
                     db.SaveChanges();
 
                     //更新記憶体
-                    foreach (var item in ArticleUserReplays)
-                    {
-                        _ArticleUserReplayCache.Remove(item);
-                    }
+                    _ArticleUserReplayCache.RemoveAll(a => objIDs.Contains(a.ArticleUserReplay_Id));
                 }
             }
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using YcuhForum.Helper;
 using YcuhForum.Models;
 
 namespace YcuhForum.Controllers
@@ -26,79 +27,24 @@ namespace YcuhForum.Controllers
                 GetUserJobTitleAndArticleGroupNameAndPoingCatgoryName(ref viewData);
                 return View(viewData);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 //存log
+                ErrorRecord newErrorRecord = new ErrorRecord();
+                newErrorRecord.ErrorRecord_SystemMessage = e.Message;
+                newErrorRecord.ErrorRecord_ActionDescribe = "讀取文章內容異常";
+                var actionStr = id;
+                newErrorRecord.ErrorRecord_CustomedMessage = actionStr;
+                newErrorRecord.ErrorRecord_CreateTime = DateTime.Now;
+                ErrorTool.RecordByDB(newErrorRecord);
             }
 
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(bool userChecked)
-        {
-            try
-            {
-                if (userChecked)
-                {
-                  
-                }
-            }
-            catch (Exception)
-            {
-                //存log
-            }
-
-            return RedirectToAction("Index");
-        }
-
-        // GET: ArticleRead/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: ArticleRead/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ArticleRead/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ArticleRead/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
 
-        #region 
+        #region guid轉中文
 
         private void GetUserJobTitleAndArticleGroupNameAndPoingCatgoryName(ref ArticleModel articleModel)
         {

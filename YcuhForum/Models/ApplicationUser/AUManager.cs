@@ -68,15 +68,15 @@ namespace YcuhForum.Models
             {
                 lock (_ApplicationUserQueueLock)
                 {
-                  //未完
+                    //未完
                     foreach (var item in applicationUser)
                     {
-                       var result = UserManager.Create(item,"123");
-                       if (result.Succeeded)
-                       {
-                           //更新記憶体
-                           _ApplicationUserCache.Add(item);
-                       }
+                        var result = UserManager.Create(item, "123");
+                        if (result.Succeeded)
+                        {
+                            //更新記憶体
+                            _ApplicationUserCache.Add(item);
+                        }
                     }
                 }
             }
@@ -149,6 +149,15 @@ namespace YcuhForum.Models
                     }
                 }
             }
+        }
+        #endregion
+
+
+        #region 進階查詢
+
+        public static ApplicationUser GetUserByUserName(string userName)
+        {
+            return _ApplicationUserCache.Where(a => a.UserName == userName).FirstOrDefault();
         }
         #endregion
     }

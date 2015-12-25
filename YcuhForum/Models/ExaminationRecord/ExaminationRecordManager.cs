@@ -116,12 +116,22 @@ namespace YcuhForum.Models
                 {
                     db.SaveChanges();
 
+                  
                     //更新記憶体
-                    foreach (var item in ExaminationRecords)
-                    {
-                        _ExaminationRecordCache.Remove(item);
-                    }
+                    _ExaminationRecordCache.RemoveAll(a => objIDs.Contains(a.ExaminationRecord_Id));
                 }
+            }
+        }
+        #endregion
+
+
+        #region 進階查詢
+
+        public static ExaminationRecord GetExaminationRecordByArticleIdAndUserId(string articleId ,string userId)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+              return  db.ExaminationRecords.Where(a => a.ExaminationRecord_ArticleId == articleId && a.ExaminationRecord_UserId == userId).FirstOrDefault();
             }
         }
         #endregion

@@ -116,14 +116,43 @@ namespace YcuhForum.Models
                 {
                     db.SaveChanges();
 
+                   
                     //更新記憶体
-                    foreach (var item in ArticleGroups)
-                    {
-                        _ArticleGroupCache.Remove(item);
-                    }
+                    _ArticleGroupCache.RemoveAll(a => objIDs.Contains(a.ArticleGroup_Id));
                 }
             }
         }
+        #endregion
+
+        #region Domain & ViewModel 映射
+
+        public static ArticleGroupModel DomainToModel(ArticleGroup articleGroup)
+        {
+            ArticleGroupModel viewModel = new ArticleGroupModel();
+            Mapper.CreateMap<ArticleGroup, ArticleGroupModel>();
+            viewModel = Mapper.Map<ArticleGroup, ArticleGroupModel>(articleGroup);
+
+            return viewModel;
+        }
+
+        public static ArticleGroup ModelToDomain(ArticleGroupModel viewModel)
+        {
+            ArticleGroup articleGroup = new ArticleGroup();
+
+            try
+            {
+                Mapper.CreateMap<ArticleGroupModel, ArticleGroup>();
+                articleGroup = Mapper.Map<ArticleGroupModel, ArticleGroup>(viewModel);
+            }
+            catch (Exception e)
+            {
+
+            }
+
+
+            return articleGroup;
+        }
+
         #endregion
     }
 }

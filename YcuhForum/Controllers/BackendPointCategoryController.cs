@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using YcuhForum.Helper;
 using YcuhForum.Models;
 
 namespace YcuhForum.Controllers
@@ -18,9 +19,8 @@ namespace YcuhForum.Controllers
 
         public string Create()
         {
-            TempData["isEdit"] = false;
+            ViewBag.Action = false;
             PointCategoryModel model = new PointCategoryModel();
-            InitialViewModel(ref model);
             return Helper.RenderPartialTool.RenderPartialViewToString(this, "_Create", model);
         }
 
@@ -32,19 +32,25 @@ namespace YcuhForum.Controllers
             try
             {
                 PointCategory PointCategoryObj = PointCategoryManager.ModelToDomain(pointCategory);
-                NewCreateModel(ref PointCategoryObj);
                 PointCategoryManager.Create(PointCategoryObj);
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.OK);
             }
-            catch
+            catch(Exception e)
             {
-                return View();
+                ErrorRecord newErrorRecord = new ErrorRecord();
+                newErrorRecord.ErrorRecord_SystemMessage = e.Message;
+                newErrorRecord.ErrorRecord_ActionDescribe = "點數群組新增異常";
+                var actionStr = Newtonsoft.Json.JsonConvert.SerializeObject(pointCategory);
+                newErrorRecord.ErrorRecord_CustomedMessage = actionStr;
+                newErrorRecord.ErrorRecord_CreateTime = DateTime.Now;
+                ErrorTool.RecordByDB(newErrorRecord);
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
         }
 
         public string Edit(string id)
         {
-            TempData["isEdit"] = true;
+            ViewBag.Action = true;
             return Helper.RenderPartialTool.RenderPartialViewToString(this, "_Create", PointCategoryManager.DomainToModel(PointCategoryManager.Get(id)));
 
         }
@@ -57,11 +63,18 @@ namespace YcuhForum.Controllers
             {
                 var pointCategoryObj = PointCategoryManager.ModelToDomain(pointCategoryModel);
                 PointCategoryManager.Update(pointCategoryObj);
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.OK);
             }
-            catch
+            catch(Exception e)
             {
-                return View();
+                ErrorRecord newErrorRecord = new ErrorRecord();
+                newErrorRecord.ErrorRecord_SystemMessage = e.Message;
+                newErrorRecord.ErrorRecord_ActionDescribe = "點數群組修改異常";
+                var actionStr = Newtonsoft.Json.JsonConvert.SerializeObject(pointCategoryModel);
+                newErrorRecord.ErrorRecord_CustomedMessage = actionStr;
+                newErrorRecord.ErrorRecord_CreateTime = DateTime.Now;
+                ErrorTool.RecordByDB(newErrorRecord);
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
         }
 
@@ -83,16 +96,5 @@ namespace YcuhForum.Controllers
         }
 
 
-
-        private void InitialViewModel(ref PointCategoryModel pointCategoryModel)
-        {
-            pointCategoryModel.PointCategory_Id = Guid.NewGuid().ToString();
-
-        }
-        private void NewCreateModel(ref PointCategory pointCategory)
-        {
-            pointCategory.PointCategory_CreateTime = DateTime.Now;
-            pointCategory.PointCategory_UpdateTime = DateTime.Now;
-        }
     }
 }

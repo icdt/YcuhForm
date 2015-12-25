@@ -5,10 +5,20 @@ using System.Web;
 
 namespace YcuhForum.Models
 {
-    public class Authoption
+    public class AuthOption
     {
-        public string Authoption_Name { get; set; }
+        public string AuthOption_Id { get; set; }
 
-        public string Authoption_Value { get; set; }
+        public string AuthOption_Name { get; set; }
+
+        public bool AuthOption_DelLock { get; set; }
+
+        public DateTime AuthOption_CreateTime { get; set; }
+
+        public DateTime AuthOption_UpdateTime { get; set; }
+
+        public string AuthOption_FK_UpdateUserId { get; set; }
+
+        public string AuthOption_FK_UserId { get; set; }
     }
 }

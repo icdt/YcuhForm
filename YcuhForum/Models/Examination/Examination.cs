@@ -23,10 +23,15 @@ namespace YcuhForum.Models
         public string Examination_FileUrl { get; set; }
 
         public bool Examination_DelLock { get; set; }
+
         public DateTime Examination_CreateTime { get; set; }
+
         public DateTime Examination_UpdateTime { get; set; }
+
         public string Examination_FK_UserId { get; set; }
+
         public string Examination_FK_UpdateUserId { get; set; }
+
         public string Examination_FK_ArticleId { get; set; }
 
 

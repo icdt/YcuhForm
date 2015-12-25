@@ -14,12 +14,20 @@ namespace YcuhForum.Models
         [Key]
         public string UserPoint_Id { get; set; }
 
-        public int UserPoint_Point { get; set; }
+        public string UserPoint_Point { get; set; }
 
         public DateTime UserPoint_CreateTime { get; set; }
 
         public DateTime UserPoint_UpdateTime { get; set; }
 
         public string UserPoint_FK_UserId { get; set; }
+    }
+
+
+    public class PointType
+    {
+        public string PointType_Id { get; set; }
+
+        public int PointType_Point { get; set; }
     }
 }

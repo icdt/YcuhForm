@@ -81,9 +81,9 @@ namespace YcuhForum.Models
                 foreach (Examination item in objInDB)
                 {
                     var theNewFromOutside = Examinations.FirstOrDefault(a => a.Examination_Id == item.Examination_Id);
-
-                    Mapper.Map(theNewFromOutside, item);
-
+                    item.Examination_Question = theNewFromOutside.Examination_Question;
+                    item.Examination_FK_UpdateUserId = theNewFromOutside.Examination_FK_UpdateUserId;
+                    item.Examination_UpdateTime = DateTime.Now;
                 }
 
                 lock (_ExaminationQueueLock)
@@ -116,11 +116,9 @@ namespace YcuhForum.Models
                 {
                     db.SaveChanges();
 
+                
                     //更新記憶体
-                    foreach (var item in Examinations)
-                    {
-                        _ExaminationCache.Remove(item);
-                    }
+                    _ExaminationCache.RemoveAll(a => objIDs.Contains(a.Examination_Id));
                 }
             }
         }
@@ -155,6 +153,15 @@ namespace YcuhForum.Models
             return Examination;
         }
 
+        #endregion
+
+
+        #region 進階查詢
+
+        public static  Examination GetExaminationByArticleId(string articleId)
+        {
+           return _ExaminationCache.Where(a => a.Examination_FK_ArticleId == articleId).FirstOrDefault();
+        }
         #endregion
     }
 }

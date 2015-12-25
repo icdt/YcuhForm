@@ -141,11 +141,7 @@ namespace YcuhForum.Models
                     db.SaveChanges();
 
                     //更新記憶体
-                    foreach (var item in articles)
-                    {
-                        //有問題須修改
-                        _ArticleCache.Remove(item);
-                    }
+                    _ArticleCache.RemoveAll(a => objIDs.Contains(a.Article_Id));
                 }
             }
         }
@@ -187,7 +183,6 @@ namespace YcuhForum.Models
         {
             return _ArticleCache.Where(a => groupList.Any(b => a.Article_FK_ArticleGroupId == b) && a.Article_IsShow && !a.Article_DelLock).OrderByDescending(a => a.Article_CreateTime).ToList();
         }
-
 
         #endregion
     }

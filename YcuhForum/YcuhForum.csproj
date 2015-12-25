@@ -42,7 +42,22 @@
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.4.1.1\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NPOI">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
     <Reference Include="PagedList">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
@@ -182,14 +197,20 @@
     <Compile Include="Controllers\ArticleRecordController.cs" />
     <Compile Include="Controllers\ArticleReplayController.cs" />
     <Compile Include="Controllers\BackendArticleController.cs" />
+    <Compile Include="Controllers\BackendArticleGroupController.cs" />
+    <Compile Include="Controllers\BackendAuthoptionController.cs" />
+    <Compile Include="Controllers\BackendExaminationController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ExaminationController.cs" />
+    <Compile Include="Controllers\ForumController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\BackendPointCategoryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\ErrorTool.cs" />
+    <Compile Include="Helper\ExaminationTools.cs" />
     <Compile Include="Helper\RenderPartialTool.cs" />
     <Compile Include="Migrations\201512230909404_InitDB.cs" />
     <Compile Include="Migrations\201512230909404_InitDB.Designer.cs">
@@ -198,6 +219,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationUser\ApplicationUser.cs" />
+    <Compile Include="Models\ApplicationUser\ApplicationUserModel.cs" />
     <Compile Include="Models\ApplicationUser\AUManager.cs" />
     <Compile Include="Models\ArticleGroup\ArticleGroup.cs" />
     <Compile Include="Models\ArticleGroup\ArticleGroupManager.cs" />
@@ -211,12 +233,16 @@
     <Compile Include="Models\Article\Article.cs" />
     <Compile Include="Models\Article\ArticleManager.cs" />
     <Compile Include="Models\Article\ArticleModel.cs" />
-    <Compile Include="Models\Authoption\Authoption.cs" />
+    <Compile Include="Models\Authoption\AuthOption.cs" />
+    <Compile Include="Models\Authoption\AuthOptionManager.cs" />
+    <Compile Include="Models\Authoption\AuthOptionModel.cs" />
+    <Compile Include="Models\Error\ErrorRecord.cs" />
     <Compile Include="Models\ExaminationRecord\ExaminationRecord.cs" />
     <Compile Include="Models\ExaminationRecord\ExaminationRecordManager.cs" />
     <Compile Include="Models\Examination\Examination.cs" />
     <Compile Include="Models\Examination\ExaminationManager.cs" />
     <Compile Include="Models\Examination\ExaminationModel.cs" />
+    <Compile Include="Models\Examination\ExamQuestion.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PointCategory\PointCategory.cs" />
@@ -615,9 +641,13 @@
     <Folder Include="Views\ArticleRead\" />
     <Folder Include="Views\ArticleRecord\" />
     <Folder Include="Views\ArticleReplay\" />
+    <Folder Include="Views\BackendAuthoption\" />
+    <Folder Include="Views\BackendExamination\" />
+    <Folder Include="Views\BackendGroup\" />
     <Folder Include="Views\BackEndPointCategory\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Examination\" />
+    <Folder Include="Views\Forum\" />
     <Folder Include="Views\PointCategory\" />
   </ItemGroup>
   <ItemGroup>

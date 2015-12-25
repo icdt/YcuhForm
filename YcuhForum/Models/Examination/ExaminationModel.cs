@@ -40,22 +40,4 @@ namespace YcuhForum.Models
         }
     }
 
-
-
-
-
-
-    public class ExamOptionModel
-    {
-        public String Question { get; set; }
-
-        public List<OptionsAndAnswerModel> Options { get; set; }
-
-    }
-    public class OptionsAndAnswerModel
-    {
-        public string Option { get; set; }
-
-        public Boolean Answer { get; set; }
-    }
 }

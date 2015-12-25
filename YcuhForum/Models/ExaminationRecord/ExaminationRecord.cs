@@ -14,12 +14,6 @@ namespace YcuhForum.Models
         [Key]
         public string ExaminationRecord_Id { get; set; }
 
-        public string ExaminationRecord_ArticleGroup { get; set; }
-
-        public string ExaminationRecord_ArticleCategory { get; set; }
-
-        public string ExaminationRecord_ArticleTitle { get; set; }
-
         public string ExaminationRecord_ExaminationQuestionNumber { get; set; }
 
         public string ExaminationRecord_CorrentNumber { get; set; }
@@ -28,10 +22,14 @@ namespace YcuhForum.Models
 
         public bool ExaminationRecord_IsPass { get; set; }
 
+        public DateTime ExaminationRecord_DelLock { get; set; }
+
         public DateTime ExaminationRecord_CreateTime { get; set; }
 
         public DateTime ExaminationRecord_UpdateTime { get; set; }
 
         public string ExaminationRecord_UserId { get; set; }
+
+        public string ExaminationRecord_ArticleId { get; set; }
     }
 }

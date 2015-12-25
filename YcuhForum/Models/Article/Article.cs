@@ -25,6 +25,8 @@ namespace YcuhForum.Models
 
         public string Article_OtherSiteUrl { get; set; }
 
+        public int Article_Count { get; set; }
+
         public bool Article_DelLock { get; set; }
 
         public DateTime Article_CreateTime { get; set; }
@@ -51,6 +53,8 @@ namespace YcuhForum.Models
             Article_IsReply = true;
             Article_CreateTime = DateTime.Now;
             Article_UpdateTime = DateTime.Now;
+            Article_Count = 0;
+            Article_Point = 0;
         }
    
     }
