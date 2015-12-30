@@ -216,6 +216,22 @@
     <Compile Include="Migrations\201512230909404_InitDB.Designer.cs">
       <DependentUpon>201512230909404_InitDB.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512280211144_addChangeModel.cs" />
+    <Compile Include="Migrations\201512280211144_addChangeModel.Designer.cs">
+      <DependentUpon>201512280211144_addChangeModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512280212295_addChangeApplication.cs" />
+    <Compile Include="Migrations\201512280212295_addChangeApplication.Designer.cs">
+      <DependentUpon>201512280212295_addChangeApplication.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512280511198_addNewColumnAoolicationName.cs" />
+    <Compile Include="Migrations\201512280511198_addNewColumnAoolicationName.Designer.cs">
+      <DependentUpon>201512280511198_addNewColumnAoolicationName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512280712114_addCCHANGE.cs" />
+    <Compile Include="Migrations\201512280712114_addCCHANGE.Designer.cs">
+      <DependentUpon>201512280712114_addCCHANGE.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationUser\ApplicationUser.cs" />
@@ -236,6 +252,7 @@
     <Compile Include="Models\Authoption\AuthOption.cs" />
     <Compile Include="Models\Authoption\AuthOptionManager.cs" />
     <Compile Include="Models\Authoption\AuthOptionModel.cs" />
+    <Compile Include="Models\DbSeed.cs" />
     <Compile Include="Models\Error\ErrorRecord.cs" />
     <Compile Include="Models\ExaminationRecord\ExaminationRecord.cs" />
     <Compile Include="Models\ExaminationRecord\ExaminationRecordManager.cs" />
@@ -660,6 +677,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201512230909404_InitDB.resx">
       <DependentUpon>201512230909404_InitDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512280211144_addChangeModel.resx">
+      <DependentUpon>201512280211144_addChangeModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512280212295_addChangeApplication.resx">
+      <DependentUpon>201512280212295_addChangeApplication.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512280511198_addNewColumnAoolicationName.resx">
+      <DependentUpon>201512280511198_addNewColumnAoolicationName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512280712114_addCCHANGE.resx">
+      <DependentUpon>201512280712114_addCCHANGE.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

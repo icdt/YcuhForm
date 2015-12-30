@@ -13,6 +13,7 @@ namespace YcuhForum.Controllers
         private List<string> _groupList = new List<string>();
 
         private string _strUserId;
+        private bool _backendSpAuth;
 
         /// <summary>
         /// 客戶前端顯示面板群組
@@ -60,6 +61,30 @@ namespace YcuhForum.Controllers
             set
             {
                 _strUserId = value;
+            }
+        }
+
+        /// <summary>
+        /// 可否進後台
+        /// </summary>
+        public bool backendSpAuth
+        {
+            get
+            {
+                var userObj = AUManager.GetUserByUserName(User.Identity.Name);
+                if (userObj == null)
+                {
+                    _backendSpAuth = false;
+                }
+                else
+                {
+                    _backendSpAuth = userObj.ApplicationUser_BackendAuth;
+                }
+                return _backendSpAuth;
+            }
+            set
+            {
+                _backendSpAuth = value;
             }
         }
     }

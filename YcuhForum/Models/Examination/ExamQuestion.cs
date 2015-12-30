@@ -9,6 +9,10 @@ namespace YcuhForum.Models
     #region 上資料
     public class ExamQuestion
     {
+        public ExamQuestion()
+        {
+            Options = new List<OptionsAndAnswer>();
+        }
         public int Id { get; set; }
 
         public String Question { get; set; }

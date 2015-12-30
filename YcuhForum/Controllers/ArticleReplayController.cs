@@ -8,22 +8,33 @@ using YcuhForum.Models;
 
 namespace YcuhForum.Controllers
 {
-    public class ArticleReplayController : Controller
+    public class ArticleReplayController : BaseController
     {
         [ChildActionOnly]
         public PartialViewResult GetView(string id)
         {
+            //次層
             var catchData = ArticleUserReplayManager.getReplayByArticleId(id);
             var viewData = ArticleUserReplayManager.ListDomainToListModel(catchData);
+            //次次層
+            foreach (var item in viewData)
+	        {
+		      item.ArticleUserReplayModelList = ArticleUserReplayManager.ListDomainToListModel(ArticleUserReplayManager.getChildReplayId(item.ArticleUserReplay_Id));
+	        }
+          
+            return PartialView("列表模板", viewData);
+        }
+
+        public string Create(string id)
+        {
             //要丟回來的物件
             var newArticleUserReplayModel = new ArticleUserReplayModel();
-            TempData["newArticleUserReplayModel"] = newArticleUserReplayModel;
-            return PartialView("列表模板", viewData);
+            newArticleUserReplayModel.ArticleUserReplay_ParentId = id;
+            return Helper.RenderPartialTool.RenderPartialViewToString(this, "_Create", newArticleUserReplayModel);
         }
 
         //AJAX 來回
         [HttpPost]
-        [ValidateInput(false)]
         [ValidateAntiForgeryToken]
         public ActionResult Create(ArticleUserReplayModel articleUserReplay)
         {
@@ -40,7 +51,6 @@ namespace YcuhForum.Controllers
                 newErrorRecord.ErrorRecord_ActionDescribe = "回覆文章異常";
                 var actionStr = Newtonsoft.Json.JsonConvert.SerializeObject(articleUserReplay);
                 newErrorRecord.ErrorRecord_CustomedMessage = actionStr;
-               
                 ErrorTool.RecordByDB(newErrorRecord);
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }

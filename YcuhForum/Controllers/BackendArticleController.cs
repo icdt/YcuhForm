@@ -8,29 +8,29 @@ using YcuhForum.Helper;
 
 namespace YcuhForum.Controllers
 {
-    public class BackendArticleController : Controller
+
+    public class BackendArticleController : BaseController
     {
 
-        // GET: BackendArticle
-        public ActionResult Index(int page = 1 )
+        public ActionResult Index(int page = 1)
         {
             return View(ArticleManager.GetPagedList(page, 10));
         }
 
-
-     
+             
         public string Create()
         {
             ViewBag.Action = "Create";            
             ArticleModel model = new ArticleModel();
             ViewBag.PointCategorySelector = PreparePointCategorySelectList(null);
-            ViewBag.ArticleGroupSelector = PrepareArticleGroupSelectList(null);
+            ViewBag.ArticleGroupSelector = PrepareUserList();
+           // ViewBag.ArticleGroupSelector = PrepareArticleGroupSelectList(null);
            
             return RenderPartialTool.RenderPartialViewToString(this, "_Create",model);
           
         }
 
-        // POST: BackendArticle/Create
+       
         [HttpPost]
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
@@ -46,8 +46,12 @@ namespace YcuhForum.Controllers
                 ArticleManager.Create(articleObj);
                 #endregion
 
-                #region 指定觀看
-                SetEnforce(articleObj.Article_Id, userIdList);
+                #region 指定觀看(阿長有選或沒選(同一般者行為))
+                if (userIdList != null && userIdList.Count >= 0)
+                {
+                    SetEnforce(articleObj.Article_Id, userIdList);
+                }
+             
                 #endregion
                 return RedirectToAction("Index");
             }
@@ -56,25 +60,25 @@ namespace YcuhForum.Controllers
                 ErrorRecord newErrorRecord = new ErrorRecord();
                 newErrorRecord.ErrorRecord_SystemMessage = e.Message;
                 newErrorRecord.ErrorRecord_ActionDescribe = "文章新增異常";
-                var actionStr = Newtonsoft.Json.JsonConvert.SerializeObject(articleModel);
+                var actionStr ="建立者:"+strUserId +";"+ Newtonsoft.Json.JsonConvert.SerializeObject(articleModel);
                 newErrorRecord.ErrorRecord_CustomedMessage = actionStr;
                 ErrorTool.RecordByDB(newErrorRecord);
                 return RedirectToAction("Index");
             }
         }
 
-        // GET: BackendArticle/Edit/5
+     
         public string Edit(string id)
         {
             ViewBag.Action = "Edit";
             var targetObj =  ArticleManager.DomainToModel(ArticleManager.Get(id));
             ViewBag.PointCategorySelector = PreparePointCategorySelectList(targetObj.Article_FK_PointCategoryId);
-            ViewBag.ArticleGroupSelector = PrepareArticleGroupSelectList(targetObj.Article_FK_ArticleGroupId);
+           //ViewBag.ArticleGroupSelector = PrepareArticleGroupSelectList(targetObj.Article_FK_ArticleGroupId);
            return Helper.RenderPartialTool.RenderPartialViewToString(this, "_Create", targetObj);
 
         }
 
-        // POST: BackendArticle/Edit/5
+     
         [HttpPost]
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
@@ -88,7 +92,11 @@ namespace YcuhForum.Controllers
                 #endregion
 
                 #region 修改指定觀看(若已觀看則不處理)
-                UpdateEnforce(articleObj.Article_Id, userIdList);
+                if (userIdList != null && userIdList.Count >= 0)
+                {
+                    UpdateEnforce(articleObj.Article_Id, userIdList);
+                }
+             
                 #endregion
 
                 return RedirectToAction("Index");
@@ -98,7 +106,7 @@ namespace YcuhForum.Controllers
                 ErrorRecord newErrorRecord = new ErrorRecord();
                 newErrorRecord.ErrorRecord_SystemMessage = e.Message;
                 newErrorRecord.ErrorRecord_ActionDescribe = "文章修改異常";
-                var actionStr = Newtonsoft.Json.JsonConvert.SerializeObject(articleModel);
+                var actionStr = "建立者:" + strUserId + ";" + Newtonsoft.Json.JsonConvert.SerializeObject(articleModel);
                 newErrorRecord.ErrorRecord_CustomedMessage = actionStr;
                 ErrorTool.RecordByDB(newErrorRecord);
                 return RedirectToAction("Index");
@@ -106,7 +114,6 @@ namespace YcuhForum.Controllers
         }
 
        
-        // POST: BackendArticle/Delete/5
         [HttpPost]
         public ActionResult Delete(string id)
         {
@@ -153,6 +160,13 @@ namespace YcuhForum.Controllers
                 });
             }
             return articleGroupSeletor;
+        }
+
+        private MultiSelectList PrepareUserList()
+        {
+            var userObjList = AUManager.GetAll();
+
+            return new MultiSelectList(userObjList, "Id", "ApplicationUser_Name", new List<string>());
         }
         #endregion
 

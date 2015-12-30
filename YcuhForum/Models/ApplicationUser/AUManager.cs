@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using PagedList;
 using System;
@@ -31,7 +32,7 @@ namespace YcuhForum.Models
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                _ApplicationUserCache = db.Users.Where(a => a.ApplicationUser_DelLock).ToList();
+                _ApplicationUserCache = db.Users.Where(a => !a.ApplicationUser_DelLock).ToList();
             }
         }
         #endregion
@@ -71,12 +72,22 @@ namespace YcuhForum.Models
                     //未完
                     foreach (var item in applicationUser)
                     {
-                        var result = UserManager.Create(item, "123");
-                        if (result.Succeeded)
+                        try
                         {
-                            //更新記憶体
-                            _ApplicationUserCache.Add(item);
+                            item.Id = Guid.NewGuid().ToString();
+                            var result = UserManager.Create(item, item.ApplicationUser_Password);
+                            if (result.Succeeded)
+                            {
+                                //更新記憶体
+                                _ApplicationUserCache.Add(item);
+                            }
                         }
+                        catch (Exception e)
+                        {
+
+                        }
+                     
+                    
                     }
                 }
             }
@@ -152,7 +163,36 @@ namespace YcuhForum.Models
         }
         #endregion
 
+        #region Domain & ViewModel 映射
 
+        public static ApplicationUserModel DomainToModel(ApplicationUser ApplicationUser)
+        {
+            ApplicationUserModel viewModel = new ApplicationUserModel();
+            Mapper.CreateMap<ApplicationUser, ApplicationUserModel>();
+            viewModel = Mapper.Map<ApplicationUser, ApplicationUserModel>(ApplicationUser);
+
+            return viewModel;
+        }
+
+        public static ApplicationUser ModelToDomain(ApplicationUserModel viewModel)
+        {
+            ApplicationUser ApplicationUser = new ApplicationUser();
+
+            try
+            {
+                Mapper.CreateMap<ApplicationUserModel, ApplicationUser>();
+                ApplicationUser = Mapper.Map<ApplicationUserModel, ApplicationUser>(viewModel);
+            }
+            catch (Exception e)
+            {
+
+            }
+
+
+            return ApplicationUser;
+        }
+
+        #endregion
         #region 進階查詢
 
         public static ApplicationUser GetUserByUserName(string userName)

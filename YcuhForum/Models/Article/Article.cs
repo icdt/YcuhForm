@@ -55,6 +55,8 @@ namespace YcuhForum.Models
             Article_UpdateTime = DateTime.Now;
             Article_Count = 0;
             Article_Point = 0;
+            Article_FK_ArticleGroupId = string.Empty;
+            Article_FK_PointCategoryId = string.Empty;
         }
    
     }

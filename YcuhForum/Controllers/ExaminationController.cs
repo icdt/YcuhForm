@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using YcuhForum.Helper;
 using YcuhForum.Models;
 
 namespace YcuhForum.Controllers
 {
     public class ExaminationController : BaseController
     {
-      //AJAX
+       //AJAX
         public string Detail(string articleId)
         {
             #region 取出題目
@@ -19,7 +20,7 @@ namespace YcuhForum.Controllers
             GetRandom(ref examModelObj);
             #endregion
 
-            #region 榜定考試券
+            #region 綁定考試券
             List<ExamQuestionModel> newExamQuestionModel = new  List<ExamQuestionModel>();
             Mapper.CreateMap<List<ExamQuestion>,List<ExamQuestionModel>>();
             newExamQuestionModel = Mapper.Map<List<ExamQuestion>,List<ExamQuestionModel>>(examModelObj);
@@ -35,14 +36,17 @@ namespace YcuhForum.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public string Create(List<ExamQuestionModel> examQuestion, string articleId)
         {
-            #region 取出題目(含解答)
-            var examObj = ExaminationManager.GetExaminationByArticleId(articleId);
-            var examAnserObj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ExamQuestionModel>>(examObj.Examination_Question);
-            #endregion
+            try
+            {
+                #region 取出題目(含解答)
+                var examObj = ExaminationManager.GetExaminationByArticleId(articleId);
+                var examAnserObj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ExamQuestionModel>>(examObj.Examination_Question);
+                #endregion
 
-            #region 答案比對
+                #region 答案比對
                 ExaminationRecord newExaminationRecord = new ExaminationRecord();
                 newExaminationRecord.ExaminationRecord_Id = Guid.NewGuid().ToString();
                 newExaminationRecord.ExaminationRecord_ArticleId = articleId;
@@ -70,14 +74,27 @@ namespace YcuhForum.Controllers
                         }
                     }
                 }
-            #endregion
+                #endregion
 
-            #region 回傳物件
+                #region 回傳物件
 
-            ViewBag.AnserSheet = true;
-            return Helper.RenderPartialTool.RenderPartialViewToString(this, "模板", examQuestion);
-           
-            #endregion
+                ViewBag.AnserSheet = true;
+                return Helper.RenderPartialTool.RenderPartialViewToString(this, "模板", examQuestion);
+
+                #endregion
+            }
+            catch (Exception e)
+            {
+                ErrorRecord newErrorRecord = new ErrorRecord();
+                newErrorRecord.ErrorRecord_SystemMessage = e.Message;
+                newErrorRecord.ErrorRecord_ActionDescribe = "考試紀錄新增異常";
+                var actionStr = "建立者:" + strUserId + ";目標文章:"+ articleId + ";" + Newtonsoft.Json.JsonConvert.SerializeObject(examQuestion);
+                newErrorRecord.ErrorRecord_CustomedMessage = actionStr;
+                newErrorRecord.ErrorRecord_CreateTime = DateTime.Now;
+                ErrorTool.RecordByDB(newErrorRecord);
+                return "<div><span color=\"red\">系統忙碌中</span></div>";
+            }
+         
         }
 
 

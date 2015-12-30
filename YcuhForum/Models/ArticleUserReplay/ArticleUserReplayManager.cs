@@ -17,7 +17,7 @@ namespace YcuhForum.Models
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                _ArticleUserReplayCache = db.ArticleUserReplays.AsNoTracking().ToList();
+                _ArticleUserReplayCache = db.ArticleUserReplays.AsNoTracking().Where(a=>!a.ArticleUserReplay_DelLock && a.ArticleUserReplay_ParentId == "").ToList();
             }
         }
         #endregion
@@ -168,6 +168,10 @@ namespace YcuhForum.Models
         public static List<ArticleUserReplay> getReplayByArticleId(string articleId)
         {
            return _ArticleUserReplayCache.Where(a => a.ArticleUserReplay_FK_ArticleId == articleId).ToList();
+        }
+        public static List<ArticleUserReplay> getChildReplayId(string id)
+        {
+            return _ArticleUserReplayCache.Where(a => a.ArticleUserReplay_ParentId == id).ToList();
         }
         #endregion
     }

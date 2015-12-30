@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,6 +8,7 @@ namespace YcuhForum.Models
 {
     public class AuthOption
     {
+        [Key]
         public string AuthOption_Id { get; set; }
 
         public string AuthOption_Name { get; set; }

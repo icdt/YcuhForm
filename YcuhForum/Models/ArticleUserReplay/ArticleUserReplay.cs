@@ -41,6 +41,7 @@ namespace YcuhForum.Models
             ArticleUserReplay_DelLock = false;
             ArticleUserReplay_CreateTime = DateTime.Now;
             ArticleUserReplay_UpdateTime = DateTime.Now;
+            ArticleUserReplay_ParentId = string.Empty;
         }
     }
 }

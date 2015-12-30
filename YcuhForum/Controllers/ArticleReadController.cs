@@ -11,10 +11,11 @@ namespace YcuhForum.Controllers
     public class ArticleReadController : BaseController
     {
         //列表
-        public ActionResult Index()
+        public ActionResult Index(string id, int page = 1)
         {
-            var tempData = ArticleManager.getArticleByUser(groupList);
-            return View(tempData.GroupBy(a => a.Article_FK_ArticleGroupId));
+            var tempData = ArticleManager.getArticleByGroupId(id, page, 10);
+            ViewBag.SortCategory = PrepareSortPointCategory();
+            return View(tempData);
         }
 
         //單篇文章      
@@ -43,7 +44,6 @@ namespace YcuhForum.Controllers
         }
 
 
-
         #region guid轉中文
 
         private void GetUserJobTitleAndArticleGroupNameAndPoingCatgoryName(ref ArticleModel articleModel)
@@ -61,6 +61,25 @@ namespace YcuhForum.Controllers
             articleModel.Article_PointCategoryName = pointCategory.PointCategory_Name;
         }
 
+
+       
+        #endregion
+
+        #region 過濾物件
+        private List<SelectListItem> PrepareSortPointCategory()
+        {
+            var pointCategory = PointCategoryManager.GetAll();
+            List<SelectListItem> categorySeletor = new List<SelectListItem>();
+            foreach (var item in pointCategory)
+            {
+                categorySeletor.Add(new SelectListItem()
+                {
+                    Text = item.PointCategory_Name,
+                    Value = item.PointCategory_Id.ToString()
+                });
+            }
+            return categorySeletor;
+        }
         #endregion
     }
 }

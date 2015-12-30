@@ -30,11 +30,30 @@ namespace YcuhForum.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(AuthOptionModel authoptionModel)
         {
-            var authoptionObj = AuthOptionManager.ModelToDomain(authoptionModel);
-            authoptionObj.AuthOption_FK_UserId = strUserId;
-            authoptionObj.AuthOption_FK_UpdateUserId = strUserId;
-            AuthOptionManager.Create(authoptionObj);
-            return RedirectToAction("Index");
+
+            try
+            {
+                var authoptionObj = AuthOptionManager.ModelToDomain(authoptionModel);
+                authoptionObj.AuthOption_FK_UserId = strUserId;
+                authoptionObj.AuthOption_FK_UpdateUserId = strUserId;
+                AuthOptionManager.Create(authoptionObj);
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                ErrorRecord newErrorRecord = new ErrorRecord();
+                newErrorRecord.ErrorRecord_SystemMessage = e.Message;
+                newErrorRecord.ErrorRecord_ActionDescribe = "權限新增異常";
+                var actionStr = "建立者:" + strUserId + ";" + Newtonsoft.Json.JsonConvert.SerializeObject(authoptionModel);
+                newErrorRecord.ErrorRecord_CustomedMessage = actionStr;
+                newErrorRecord.ErrorRecord_CreateTime = DateTime.Now;
+                ErrorTool.RecordByDB(newErrorRecord);
+                TempData["ErrorMesage"] = "新增失敗";
+                return RedirectToAction("Index");
+            }
+
+
+        
         }
         //AJAX
         public string Edit(string id)
@@ -50,10 +69,26 @@ namespace YcuhForum.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(AuthOptionModel authoptionModel)
         {
-            var authoptionObj = AuthOptionManager.ModelToDomain(authoptionModel);
-            authoptionObj.AuthOption_FK_UpdateUserId = strUserId;
-            AuthOptionManager.Update(authoptionObj);
-            return RedirectToAction("Index");
+            try
+            {
+                var authoptionObj = AuthOptionManager.ModelToDomain(authoptionModel);
+                authoptionObj.AuthOption_FK_UpdateUserId = strUserId;
+                AuthOptionManager.Update(authoptionObj);
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                ErrorRecord newErrorRecord = new ErrorRecord();
+                newErrorRecord.ErrorRecord_SystemMessage = e.Message;
+                newErrorRecord.ErrorRecord_ActionDescribe = "權限修改異常";
+                var actionStr = "建立者:" + strUserId + ";" + Newtonsoft.Json.JsonConvert.SerializeObject(authoptionModel);
+                newErrorRecord.ErrorRecord_CustomedMessage = actionStr;
+                newErrorRecord.ErrorRecord_CreateTime = DateTime.Now;
+                ErrorTool.RecordByDB(newErrorRecord);
+                TempData["ErrorMesage"] = "修改失敗";
+                return RedirectToAction("Index");
+            }
+         
         }
 
 

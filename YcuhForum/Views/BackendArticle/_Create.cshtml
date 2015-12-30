@@ -14,18 +14,23 @@
         @Html.HiddenFor(model => model.Article_FK_UserId)
 
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.Article_FK_ArticleGroupId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Article_FK_ArticleGroupId, (IEnumerable<SelectListItem>)ViewBag.ArticleGroupSelector, "請選擇", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Article_FK_ArticleGroupId, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+        <div class="form-group">
+            @Html.Label("人員", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ListBox("userIdList", (IEnumerable<SelectListItem>)ViewBag.ArticleGroupSelector, new { @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Article_FK_PointCategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-
                 @Html.DropDownListFor(model => model.Article_FK_PointCategoryId, (IEnumerable<SelectListItem>)ViewBag.PointCategorySelector, "請選擇", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Article_FK_PointCategoryId, "", new { @class = "text-danger" })
             </div>

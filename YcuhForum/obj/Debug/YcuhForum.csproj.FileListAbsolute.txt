@@ -91,8 +91,6 @@ D:\githubYCUHForum\YcuhForum\YcuhForum\bin\PagedList.xml
 D:\githubYCUHForum\YcuhForum\YcuhForum\bin\PagedList.Mvc.xml
 D:\githubYCUHForum\YcuhForum\YcuhForum\obj\Debug\YcuhForum.Migrations.addNewTable.resources
 D:\githubYCUHForum\YcuhForum\YcuhForum\obj\Debug\YcuhForum.Migrations.addTwoTable.resources
-D:\forum\YcuhForm\YcuhForum\obj\Debug\YcuhForum.csprojResolveAssemblyReference.cache
-D:\forum\YcuhForm\YcuhForum\obj\Debug\YcuhForum.dll
 D:\forum\YcuhForm\YcuhForum\bin\YcuhForum.dll.config
 D:\forum\YcuhForm\YcuhForum\bin\YcuhForum.dll
 D:\forum\YcuhForm\YcuhForum\bin\YcuhForum.pdb
@@ -100,6 +98,7 @@ D:\forum\YcuhForm\YcuhForum\bin\Antlr3.Runtime.dll
 D:\forum\YcuhForm\YcuhForum\bin\AutoMapper.dll
 D:\forum\YcuhForm\YcuhForum\bin\EntityFramework.dll
 D:\forum\YcuhForm\YcuhForum\bin\EntityFramework.SqlServer.dll
+D:\forum\YcuhForm\YcuhForum\bin\ICSharpCode.SharpZipLib.dll
 D:\forum\YcuhForm\YcuhForum\bin\Microsoft.AspNet.Identity.Core.dll
 D:\forum\YcuhForm\YcuhForum\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 D:\forum\YcuhForm\YcuhForum\bin\Microsoft.AspNet.Identity.Owin.dll
@@ -114,6 +113,10 @@ D:\forum\YcuhForm\YcuhForum\bin\Microsoft.Owin.Security.OAuth.dll
 D:\forum\YcuhForm\YcuhForum\bin\Microsoft.Owin.Security.Twitter.dll
 D:\forum\YcuhForm\YcuhForum\bin\Microsoft.Web.Infrastructure.dll
 D:\forum\YcuhForm\YcuhForum\bin\Newtonsoft.Json.dll
+D:\forum\YcuhForm\YcuhForum\bin\NPOI.dll
+D:\forum\YcuhForm\YcuhForum\bin\NPOI.OOXML.dll
+D:\forum\YcuhForm\YcuhForum\bin\NPOI.OpenXml4Net.dll
+D:\forum\YcuhForm\YcuhForum\bin\NPOI.OpenXmlFormats.dll
 D:\forum\YcuhForm\YcuhForum\bin\Owin.dll
 D:\forum\YcuhForm\YcuhForum\bin\PagedList.dll
 D:\forum\YcuhForm\YcuhForum\bin\PagedList.Mvc.dll
@@ -129,6 +132,9 @@ D:\forum\YcuhForm\YcuhForum\bin\System.Web.WebPages.dll
 D:\forum\YcuhForm\YcuhForum\bin\System.Web.WebPages.Razor.dll
 D:\forum\YcuhForm\YcuhForum\bin\WebGrease.dll
 D:\forum\YcuhForm\YcuhForum\bin\AutoMapper.xml
+D:\forum\YcuhForm\YcuhForum\bin\NPOI.xml
+D:\forum\YcuhForm\YcuhForum\bin\NPOI.OOXML.xml
+D:\forum\YcuhForm\YcuhForum\bin\NPOI.OpenXml4Net.xml
 D:\forum\YcuhForm\YcuhForum\bin\PagedList.xml
 D:\forum\YcuhForm\YcuhForum\bin\PagedList.Mvc.xml
 D:\forum\YcuhForm\YcuhForum\bin\System.Web.Helpers.xml
@@ -179,6 +185,12 @@ D:\forum\YcuhForm\YcuhForum\bin\zh-Hant\Microsoft.Owin.Security.Facebook.resourc
 D:\forum\YcuhForm\YcuhForum\bin\zh-Hant\Microsoft.Owin.Security.Google.resources.dll
 D:\forum\YcuhForm\YcuhForum\bin\zh-Hant\Microsoft.Owin.Security.Twitter.resources.dll
 D:\forum\YcuhForm\YcuhForum\bin\zh-Hant\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
-D:\forum\YcuhForm\YcuhForum\obj\Debug\YcuhForum.pdb
 D:\forum\YcuhForm\YcuhForum\obj\Debug\YcuhForum.Migrations.InitDB.resources
+D:\forum\YcuhForm\YcuhForum\obj\Debug\YcuhForum.Migrations.addChangeModel.resources
+D:\forum\YcuhForm\YcuhForum\obj\Debug\YcuhForum.Migrations.addChangeApplication.resources
+D:\forum\YcuhForm\YcuhForum\obj\Debug\YcuhForum.Migrations.addNewColumnAoolicationName.resources
 D:\forum\YcuhForm\YcuhForum\obj\Debug\YcuhForum.csproj.GenerateResource.Cache
+D:\forum\YcuhForm\YcuhForum\obj\Debug\YcuhForum.dll
+D:\forum\YcuhForm\YcuhForum\obj\Debug\YcuhForum.pdb
+D:\forum\YcuhForm\YcuhForum\obj\Debug\YcuhForum.Migrations.addCCHANGE.resources
+D:\forum\YcuhForm\YcuhForum\obj\Debug\YcuhForum.csprojResolveAssemblyReference.cache

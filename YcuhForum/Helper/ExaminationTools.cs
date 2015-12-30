@@ -58,14 +58,14 @@ namespace YcuhForum.Helper
             List<ExamQuestion> finallString = new List<ExamQuestion>();
             HSSFWorkbook wk = new HSSFWorkbook(file.InputStream);
             var sheet = wk.GetSheetAt(0);
-            for (int row = 0; row <= sheet.LastRowNum; row++)
+            for (int row = 1; row <= sheet.LastRowNum; row++)
             {
                 if (sheet.GetRow(row) != null)
                 {
                     List<String> optionsValue = sheet.GetRow(row).Cells[1].ToString().Split('/').ToList();
 
                     ExamQuestion newExamQuestion = new ExamQuestion();
-                    newExamQuestion.Id = row + 1;
+                    newExamQuestion.Id = row;
                     newExamQuestion.Question = sheet.GetRow(row).Cells[0].ToString();
                      for (int k = 0; k < optionsValue.Count();k++)
                      {

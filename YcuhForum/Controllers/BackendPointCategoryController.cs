@@ -8,7 +8,7 @@ using YcuhForum.Models;
 
 namespace YcuhForum.Controllers
 {
-    public class BackendPointCategoryController : Controller
+    public class BackendPointCategoryController : BaseController
     {
         // GET: PointCategory
         public ActionResult Index()
@@ -40,7 +40,7 @@ namespace YcuhForum.Controllers
                 ErrorRecord newErrorRecord = new ErrorRecord();
                 newErrorRecord.ErrorRecord_SystemMessage = e.Message;
                 newErrorRecord.ErrorRecord_ActionDescribe = "點數群組新增異常";
-                var actionStr = Newtonsoft.Json.JsonConvert.SerializeObject(pointCategory);
+                var actionStr = "建立者:" + strUserId + ";" + Newtonsoft.Json.JsonConvert.SerializeObject(pointCategory);
                 newErrorRecord.ErrorRecord_CustomedMessage = actionStr;
                 newErrorRecord.ErrorRecord_CreateTime = DateTime.Now;
                 ErrorTool.RecordByDB(newErrorRecord);
@@ -51,8 +51,8 @@ namespace YcuhForum.Controllers
         public string Edit(string id)
         {
             ViewBag.Action = true;
-            return Helper.RenderPartialTool.RenderPartialViewToString(this, "_Create", PointCategoryManager.DomainToModel(PointCategoryManager.Get(id)));
-
+            var pointCategoryObj = PointCategoryManager.Get(id);
+            return Helper.RenderPartialTool.RenderPartialViewToString(this, "_Create", PointCategoryManager.DomainToModel(pointCategoryObj));
         }
 
         // POST: PointCategory/Edit/5
@@ -70,7 +70,7 @@ namespace YcuhForum.Controllers
                 ErrorRecord newErrorRecord = new ErrorRecord();
                 newErrorRecord.ErrorRecord_SystemMessage = e.Message;
                 newErrorRecord.ErrorRecord_ActionDescribe = "點數群組修改異常";
-                var actionStr = Newtonsoft.Json.JsonConvert.SerializeObject(pointCategoryModel);
+                var actionStr = "修改者:" + strUserId + ";" + Newtonsoft.Json.JsonConvert.SerializeObject(pointCategoryModel);
                 newErrorRecord.ErrorRecord_CustomedMessage = actionStr;
                 newErrorRecord.ErrorRecord_CreateTime = DateTime.Now;
                 ErrorTool.RecordByDB(newErrorRecord);
@@ -86,7 +86,6 @@ namespace YcuhForum.Controllers
             try
             {
                 PointCategoryManager.Remove(PointCategoryManager.Get(id));
-
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.OK);
             }
             catch

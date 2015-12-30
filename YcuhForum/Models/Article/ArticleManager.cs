@@ -176,12 +176,37 @@ namespace YcuhForum.Models
             return Article;
         }
 
+        public static List<ArticleModel> DomainToModel(List<Article> articleModel)
+        {
+            List<ArticleModel> viewModel = new List<ArticleModel>();
+            Mapper.CreateMap<List<Article>, List<ArticleModel>>();
+            viewModel = Mapper.Map<List<Article>, List<ArticleModel>>(articleModel);
+
+            return viewModel;
+        }
+
+
         #endregion
 
         #region 進階查詢
         public static List<Article> getArticleByUser(List<string> groupList)
         {
             return _ArticleCache.Where(a => groupList.Any(b => a.Article_FK_ArticleGroupId == b) && a.Article_IsShow && !a.Article_DelLock).OrderByDescending(a => a.Article_CreateTime).ToList();
+        }
+
+        public static List<Article> getArticleByTime()
+        {
+            return _ArticleCache.OrderByDescending(a => a.Article_CreateTime).Take(5).ToList();
+        }
+
+        public static List<Article> getArticleByGroup()
+        {
+            return _ArticleCache.GroupBy(a => a.Article_FK_ArticleGroupId).OrderByDescending(b => b.OrderByDescending(c => c.Article_CreateTime)).SelectMany(b => b).ToList();
+        }
+
+        public static IPagedList<Article> getArticleByGroupId(string id, int pageNumber, int pageSize)
+        {
+            return _ArticleCache.Where(a => a.Article_FK_ArticleGroupId == id).OrderByDescending(a => a.Article_CreateTime).ToPagedList(pageNumber, pageSize);
         }
 
         #endregion

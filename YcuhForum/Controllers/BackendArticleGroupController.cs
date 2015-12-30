@@ -8,7 +8,7 @@ using YcuhForum.Models;
 
 namespace YcuhForum.Controllers
 {
-    public class BackendArticleGroupController : Controller
+    public class BackendArticleGroupController : BaseController
     {
         public ActionResult Index()
         {
@@ -32,18 +32,19 @@ namespace YcuhForum.Controllers
             {
                 ArticleGroup articleGroupObj = ArticleGroupManager.ModelToDomain(articleGroupModel);
                 ArticleGroupManager.Create(articleGroupObj);
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.OK);
+                return RedirectToAction("Index");
             }
             catch(Exception e)
             {
                 ErrorRecord newErrorRecord = new ErrorRecord();
                 newErrorRecord.ErrorRecord_SystemMessage = e.Message;
                 newErrorRecord.ErrorRecord_ActionDescribe = "文章群組新增異常";
-                var actionStr = Newtonsoft.Json.JsonConvert.SerializeObject(articleGroupModel);
+                var actionStr = "建立者:" + strUserId + ";" + Newtonsoft.Json.JsonConvert.SerializeObject(articleGroupModel);
                 newErrorRecord.ErrorRecord_CustomedMessage = actionStr;
                 newErrorRecord.ErrorRecord_CreateTime = DateTime.Now;
                 ErrorTool.RecordByDB(newErrorRecord);
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+                TempData["ErrorMesage"] = "新增失敗";
+                return RedirectToAction("Index");
             }
         }
 
@@ -64,18 +65,19 @@ namespace YcuhForum.Controllers
             {
                 var articleGroupObj = ArticleGroupManager.ModelToDomain(articleGroupModel);
                 ArticleGroupManager.Update(articleGroupObj);
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.OK);
+                return RedirectToAction("Index");
             }
             catch(Exception e)
             {
                 ErrorRecord newErrorRecord = new ErrorRecord();
                 newErrorRecord.ErrorRecord_SystemMessage = e.Message;
                 newErrorRecord.ErrorRecord_ActionDescribe = "文章群組修改異常";
-                var actionStr = Newtonsoft.Json.JsonConvert.SerializeObject(articleGroupModel);
+                var actionStr = "修改者:" + strUserId + ";" + Newtonsoft.Json.JsonConvert.SerializeObject(articleGroupModel);
                 newErrorRecord.ErrorRecord_CustomedMessage = actionStr;
                 newErrorRecord.ErrorRecord_CreateTime = DateTime.Now;
                 ErrorTool.RecordByDB(newErrorRecord);
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+                TempData["ErrorMesage"] = "修改失敗";
+                return RedirectToAction("Index");
             }
         }
     

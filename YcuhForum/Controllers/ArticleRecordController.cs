@@ -16,19 +16,20 @@ namespace YcuhForum.Controllers
             var catchData = ArticleUserRecordManager.getRecordByArticelAndUser(id, strUserId);
 
             ArticleUserRecordModel viewData = new ArticleUserRecordModel();
+            //有無顯示功能
+            ViewBag.ShowReplayFunction = true;
             if (catchData == null)
             {
-              
                 return PartialView("列表模板", viewData);
             }
-            else if(catchData.ArticleUserRecord_IsEnforce)
+            else if (catchData.ArticleUserRecord_IsEnforce && catchData.ArticleUserRecord_UpdateTime == new DateTime())
             {
-                ArticleUserRecordManager.ModelToDomain(viewData);
+                viewData = ArticleUserRecordManager.DomainToModel(catchData);
                 return PartialView("列表模板", viewData);
             }
-               
             else
             {
+                ViewBag.ShowReplayFunction = false;
                 return PartialView("列表模板");
             }
         }
@@ -43,9 +44,7 @@ namespace YcuhForum.Controllers
 
             try
             {
-
                 #region 檢查記錄
-
                 if (articleUserRecordModel.ArticleUserRecord_IsEnforce)
                 {
                     var articleUserRecordObj = ArticleUserRecordManager.ModelToDomain(articleUserRecordModel);
@@ -53,15 +52,13 @@ namespace YcuhForum.Controllers
                 }
                 else
                 {
-                   
                     var articleUserRecordObj = ArticleUserRecordManager.ModelToDomain(articleUserRecordModel);
                     articleUserRecordObj.ArticleUserRecord_CreateTime = DateTime.Now;
                     articleUserRecordObj.ArticleUserRecord_UpdateTime = DateTime.Now;
                     ArticleUserRecordManager.Create(articleUserRecordObj);
                 }
                 #endregion
-
-
+                
                 #region 計算點數
                 PointCalculate(articleUserRecordModel.ArticleUserRecord_FK_ArticleId);
                 #endregion

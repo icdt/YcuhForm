@@ -22,6 +22,9 @@ namespace YcuhForum.Models
 
         public string ArticleUserReplay_FK_ArticleId { get; set; }
 
+        public string ArticleUserReplay_ParentId { get; set; }
+
+        public List<ArticleUserReplayModel> ArticleUserReplayModelList { get; set; }
         public ArticleUserReplayModel()
         {
             ArticleUserReplay_Id = Guid.NewGuid().ToString();
@@ -29,6 +32,7 @@ namespace YcuhForum.Models
             ArticleUserReplay_DelLock = false;
             ArticleUserReplay_CreateTime = DateTime.Now;
             ArticleUserReplay_UpdateTime = DateTime.Now;
+            ArticleUserReplay_ParentId = string.Empty;
         }
     }
 }
