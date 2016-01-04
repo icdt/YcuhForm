@@ -12,7 +12,7 @@ namespace YcuhForum.Controllers
     {
         ///怪怪的
         //AJAX
-        public string Create(string id)
+        public ActionResult Create(string id)
         {
             #region 取出題目
             var examObj = ExaminationManager.GetExaminationByArticleId(id);
@@ -23,12 +23,12 @@ namespace YcuhForum.Controllers
             if (examObj == null)
             {
                 var examQuestionObj = new List<ExamQuestion>();
-                return Helper.RenderPartialTool.RenderPartialViewToString(this, "模板", examQuestionObj);
+                return PartialView("模板", examQuestionObj);
             }
             else
             {
                 var examQuestionObj = Newtonsoft.Json.JsonConvert.DeserializeObject<ExamQuestion>(examObj.Examination_Question);
-                return Helper.RenderPartialTool.RenderPartialViewToString(this, "模板", examQuestionObj);
+                return PartialView("模板", examQuestionObj);
             }
             #endregion
         }

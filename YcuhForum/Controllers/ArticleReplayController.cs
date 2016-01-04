@@ -25,12 +25,12 @@ namespace YcuhForum.Controllers
             return PartialView("列表模板", viewData);
         }
 
-        public string Create(string id)
+        public PartialViewResult Create(string id)
         {
             //要丟回來的物件
             var newArticleUserReplayModel = new ArticleUserReplayModel();
             newArticleUserReplayModel.ArticleUserReplay_ParentId = id;
-            return Helper.RenderPartialTool.RenderPartialViewToString(this, "_Create", newArticleUserReplayModel);
+            return PartialView("回覆模板", newArticleUserReplayModel);
         }
 
         //AJAX 來回

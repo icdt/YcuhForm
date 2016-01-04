@@ -17,11 +17,11 @@ namespace YcuhForum.Controllers
         }
 
 
-        public string Create()
+        public ActionResult Create()
         {
             ViewBag.Action = false;
             PointCategoryModel model = new PointCategoryModel();
-            return Helper.RenderPartialTool.RenderPartialViewToString(this, "_Create", model);
+            return PartialView("模板", model);
         }
 
         // POST: PointCategory/Create
@@ -48,11 +48,11 @@ namespace YcuhForum.Controllers
             }
         }
 
-        public string Edit(string id)
+        public ActionResult Edit(string id)
         {
             ViewBag.Action = true;
             var pointCategoryObj = PointCategoryManager.Get(id);
-            return Helper.RenderPartialTool.RenderPartialViewToString(this, "_Create", PointCategoryManager.DomainToModel(pointCategoryObj));
+            return PartialView("模板", pointCategoryObj);
         }
 
         // POST: PointCategory/Edit/5

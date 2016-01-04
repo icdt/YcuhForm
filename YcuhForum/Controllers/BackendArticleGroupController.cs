@@ -16,11 +16,11 @@ namespace YcuhForum.Controllers
         }
 
         //AJAX
-        public string Create()
+        public ActionResult Create()
         {
             ViewBag.Action = "Create";
             ArticleGroupModel model = new ArticleGroupModel();
-            return Helper.RenderPartialTool.RenderPartialViewToString(this, "_Create", model);
+            return PartialView("列表模板", model);
         }
 
        
@@ -49,11 +49,11 @@ namespace YcuhForum.Controllers
         }
 
         //AJAX
-        public string Edit(string id)
+        public ActionResult Edit(string id)
         {
             ViewBag.Action = "Edit";
             var targetObj = ArticleGroupManager.DomainToModel(ArticleGroupManager.Get(id));
-            return Helper.RenderPartialTool.RenderPartialViewToString(this, "_Create", targetObj);
+            return PartialView("回覆模板", targetObj);
 
         }
 

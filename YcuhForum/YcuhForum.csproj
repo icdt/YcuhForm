@@ -200,15 +200,20 @@
     <Compile Include="Controllers\BackendArticleGroupController.cs" />
     <Compile Include="Controllers\BackendAuthoptionController.cs" />
     <Compile Include="Controllers\BackendExaminationController.cs" />
+    <Compile Include="Controllers\BackendUserAuthSettingController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ErrorPageController.cs" />
     <Compile Include="Controllers\ExaminationController.cs" />
     <Compile Include="Controllers\ForumController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\BackendPointCategoryController.cs" />
+    <Compile Include="Controllers\ValidateController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\AjaxValidateAntiForgeryTool.cs" />
+    <Compile Include="Helper\AttributeTool.cs" />
     <Compile Include="Helper\ErrorTool.cs" />
     <Compile Include="Helper\ExaminationTools.cs" />
     <Compile Include="Helper\RenderPartialTool.cs" />
@@ -260,6 +265,7 @@
     <Compile Include="Models\Examination\ExaminationManager.cs" />
     <Compile Include="Models\Examination\ExaminationModel.cs" />
     <Compile Include="Models\Examination\ExamQuestion.cs" />
+    <Compile Include="Models\ICDTAuthorize.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PointCategory\PointCategory.cs" />
@@ -280,6 +286,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="App_Code\RazorForAjax.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fancybox\css\jquery.fancybox-thumbs.css" />
     <Content Include="Scripts\fancybox\css\jquery.fancybox.css" />
@@ -294,6 +301,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -652,6 +661,7 @@
     <Content Include="Upload\ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
     <Content Include="Upload\ckeditor\skins\moono\readme.md" />
     <Content Include="Views\BackendExam\_Create.cshtml" />
+    <Content Include="Views\ErrorPage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -662,10 +672,12 @@
     <Folder Include="Views\BackendExamination\" />
     <Folder Include="Views\BackendGroup\" />
     <Folder Include="Views\BackEndPointCategory\" />
+    <Folder Include="Views\BackendUserAuthSetting\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Examination\" />
     <Folder Include="Views\Forum\" />
     <Folder Include="Views\PointCategory\" />
+    <Folder Include="Views\Validate\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -10,7 +10,7 @@ namespace YcuhForum.Controllers
 {
     public class BackendAuthOptionController : BaseController
     {
-        // GET: BackendAuthOption
+      
         public ActionResult Index()
         {
             var authoptionObj = AuthOptionManager.GetAll();
@@ -19,11 +19,11 @@ namespace YcuhForum.Controllers
         }
 
         //AJAX
-        public string Create()
+        public ActionResult Create()
         {
             ViewBag.Action = "Create";
             AuthOptionModel model = new AuthOptionModel();
-            return RenderPartialTool.RenderPartialViewToString(this, "模板", model);
+            return PartialView("回覆模板", model);
         }
 
         [HttpPost]
@@ -56,13 +56,12 @@ namespace YcuhForum.Controllers
         
         }
         //AJAX
-        public string Edit(string id)
+        public ActionResult Edit(string id)
         {
             ViewBag.Action = "Edit";
             var authoptionObj = AuthOptionManager.Get(id);
             var authoptionModelObj = AuthOptionManager.DomainToModel(authoptionObj);
-            return Helper.RenderPartialTool.RenderPartialViewToString(this, "模板", authoptionModelObj);
-
+            return PartialView("回覆模板", authoptionModelObj);
         }
 
         [HttpPost]
@@ -97,7 +96,16 @@ namespace YcuhForum.Controllers
         {
             try
             {
-                AuthOptionManager.Remove(AuthOptionManager.Get(id));
+                var authOptionObj = AuthOptionManager.Get(id);
+                if (authOptionObj != null && "系統自建".Equals(authOptionObj.AuthOption_FK_UserId))
+                {
+                    return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+                }
+                else
+                {
+                    AuthOptionManager.Remove(AuthOptionManager.Get(id));
+                }
+           
 
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.OK);
             }

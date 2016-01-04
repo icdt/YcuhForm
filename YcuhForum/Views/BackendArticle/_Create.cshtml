@@ -4,7 +4,7 @@
 
 @using (Html.BeginForm((string)ViewBag.Action, "BackendArticle", FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
+  
 
     <div class="form-horizontal">
         <h4>Article</h4>
@@ -100,7 +100,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="儲存" class="btn btn-default" />
+                <input type="button" value="儲存" class="btn btn-default" onclick="gogoNewArt()"/>
             </div>
         </div>
     </div>
@@ -111,6 +111,8 @@
         $(function () {
             CKEDITOR.replace('Article_Content', { filebrowserImageUploadUrl: '@Url.Action("Uploadp", "BackendCkeditor", new { Area = "" })' });
         })
+
+    
     </script>
 
 }

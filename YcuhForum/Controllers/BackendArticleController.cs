@@ -8,7 +8,7 @@ using YcuhForum.Helper;
 
 namespace YcuhForum.Controllers
 {
-
+    [ICDTAuthorize("Admin")]
     public class BackendArticleController : BaseController
     {
 
@@ -17,54 +17,62 @@ namespace YcuhForum.Controllers
             return View(ArticleManager.GetPagedList(page, 10));
         }
 
-             
-        public string Create()
+
+        public ActionResult Create()
         {
             ViewBag.Action = "Create";            
             ArticleModel model = new ArticleModel();
             ViewBag.PointCategorySelector = PreparePointCategorySelectList(null);
             ViewBag.ArticleGroupSelector = PrepareUserList();
            // ViewBag.ArticleGroupSelector = PrepareArticleGroupSelectList(null);
-           
-            return RenderPartialTool.RenderPartialViewToString(this, "_Create",model);
-          
+            return PartialView("_Create", model);
         }
 
        
         [HttpPost]
         [ValidateInput(false)]
-        [ValidateAntiForgeryToken]
+        [AjaxValidateAntiForgeryTool]
         public ActionResult Create(ArticleModel articleModel,List<string> userIdList)
         {
-            try
+            if(ModelState.IsValid)
             {
-                #region 文章
-                //更新時間
-                articleModel.Article_CreateTime = DateTime.Now;
-                articleModel.Article_UpdateTime = DateTime.Now;
-                Article articleObj = ArticleManager.ModelToDomain(articleModel);
-                ArticleManager.Create(articleObj);
-                #endregion
-
-                #region 指定觀看(阿長有選或沒選(同一般者行為))
-                if (userIdList != null && userIdList.Count >= 0)
+                try
                 {
-                    SetEnforce(articleObj.Article_Id, userIdList);
+                    #region 文章
+                    //更新時間
+                    articleModel.Article_CreateTime = DateTime.Now;
+                    articleModel.Article_UpdateTime = DateTime.Now;
+                    Article articleObj = ArticleManager.ModelToDomain(articleModel);
+                    ArticleManager.Create(articleObj);
+                    #endregion
+
+                    #region 指定觀看(阿長有選或沒選(同一般者行為))
+                    if (userIdList != null && userIdList.Count >= 0)
+                    {
+                        SetEnforce(articleObj.Article_Id, userIdList);
+                    }
+
+                    #endregion
+                    return RedirectToAction("Index");
                 }
-             
-                #endregion
-                return RedirectToAction("Index");
+                catch (Exception e)
+                {
+                    ErrorRecord newErrorRecord = new ErrorRecord();
+                    newErrorRecord.ErrorRecord_SystemMessage = e.Message;
+                    newErrorRecord.ErrorRecord_ActionDescribe = "文章新增異常";
+                    var actionStr = "建立者:" + strUserId + ";" + Newtonsoft.Json.JsonConvert.SerializeObject(articleModel);
+                    newErrorRecord.ErrorRecord_CustomedMessage = actionStr;
+                    ErrorTool.RecordByDB(newErrorRecord);
+                    return RedirectToAction("Index");
+                }
             }
-            catch(Exception e)
+            else
             {
-                ErrorRecord newErrorRecord = new ErrorRecord();
-                newErrorRecord.ErrorRecord_SystemMessage = e.Message;
-                newErrorRecord.ErrorRecord_ActionDescribe = "文章新增異常";
-                var actionStr ="建立者:"+strUserId +";"+ Newtonsoft.Json.JsonConvert.SerializeObject(articleModel);
-                newErrorRecord.ErrorRecord_CustomedMessage = actionStr;
-                ErrorTool.RecordByDB(newErrorRecord);
-                return RedirectToAction("Index");
+                ViewBag.PointCategorySelector = PreparePointCategorySelectList(null);
+                ViewBag.ArticleGroupSelector = PrepareUserList();
+                return PartialView("_Create", articleModel);
             }
+            
         }
 
      

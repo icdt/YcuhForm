@@ -1,0 +1,9 @@
+﻿@functions
+{
+    public static string  GetForgeryToken()
+    {
+        string cookietoken,formToken;
+        AntiForgery.GetTokens(null,out cookietoken,out formToken);
+        return string.Concat(cookietoken,":",formToken);
+    }
+}

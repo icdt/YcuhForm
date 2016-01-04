@@ -28,5 +28,18 @@ namespace YcuhForum
             #endregion
 
         }
+        #region 出錯時
+        protected void Application_Error()
+        {
+            Exception ex = Server.GetLastError();
+
+            HttpContext con = HttpContext.Current;
+
+            Response.Clear();
+            Response.Redirect("/");
+
+        }
+        #endregion
+     
     }
 }

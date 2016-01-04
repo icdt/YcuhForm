@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace YcuhForum.Models
 {
@@ -9,12 +11,15 @@ namespace YcuhForum.Models
     {
         public string Article_Id { get; set; }
 
+        [Required]
         public string Article_Title { get; set; }
 
         public string Article_Content { get; set; }
 
         public int Article_Point { get; set; }
 
+        //[StringLength(10,MinimumLength=5)]
+        //[Remote("CheckObj", "Validate", ErrorMessage = "遠端驗證失敗")]
         public string Article_FileUrl { get; set; }
 
         public bool Article_IsShow { get; set; }

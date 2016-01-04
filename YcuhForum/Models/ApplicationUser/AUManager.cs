@@ -161,6 +161,7 @@ namespace YcuhForum.Models
                 }
             }
         }
+
         #endregion
 
         #region Domain & ViewModel 映射
@@ -192,13 +193,25 @@ namespace YcuhForum.Models
             return ApplicationUser;
         }
 
+
+        public static List<ApplicationUserModel> DomainListToModelList(List<ApplicationUser> applicationUserList)
+        {
+            List<ApplicationUserModel> viewModel = new List<ApplicationUserModel>();
+            Mapper.CreateMap<List<ApplicationUser>, List<ApplicationUserModel>>();
+            viewModel = Mapper.Map<List<ApplicationUser>, List<ApplicationUserModel>>(applicationUserList);
+
+            return viewModel;
+        }
         #endregion
+
         #region 進階查詢
 
         public static ApplicationUser GetUserByUserName(string userName)
         {
             return _ApplicationUserCache.Where(a => a.UserName == userName).FirstOrDefault();
         }
+
+
         #endregion
     }
 }

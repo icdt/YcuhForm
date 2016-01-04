@@ -9,8 +9,8 @@ namespace YcuhForum.Models
     public class Article
     {
         [Key]
-        public string Article_Id { get; set; }   
-
+        public string Article_Id { get; set; }
+       
         public string Article_Title { get; set; }
 
         public string Article_Content { get; set; }

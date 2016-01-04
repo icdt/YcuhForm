@@ -189,8 +189,8 @@ D:\forum\YcuhForm\YcuhForum\obj\Debug\YcuhForum.Migrations.InitDB.resources
 D:\forum\YcuhForm\YcuhForum\obj\Debug\YcuhForum.Migrations.addChangeModel.resources
 D:\forum\YcuhForm\YcuhForum\obj\Debug\YcuhForum.Migrations.addChangeApplication.resources
 D:\forum\YcuhForm\YcuhForum\obj\Debug\YcuhForum.Migrations.addNewColumnAoolicationName.resources
+D:\forum\YcuhForm\YcuhForum\obj\Debug\YcuhForum.Migrations.addCCHANGE.resources
 D:\forum\YcuhForm\YcuhForum\obj\Debug\YcuhForum.csproj.GenerateResource.Cache
 D:\forum\YcuhForm\YcuhForum\obj\Debug\YcuhForum.dll
 D:\forum\YcuhForm\YcuhForum\obj\Debug\YcuhForum.pdb
-D:\forum\YcuhForm\YcuhForum\obj\Debug\YcuhForum.Migrations.addCCHANGE.resources
 D:\forum\YcuhForm\YcuhForum\obj\Debug\YcuhForum.csprojResolveAssemblyReference.cache

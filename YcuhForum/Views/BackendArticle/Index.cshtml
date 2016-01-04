@@ -81,13 +81,14 @@
 </div>
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 @section header{
-    <link href="~/Content/sorter/style.css" rel="stylesheet" />
     <link href="~/Content/PagedList.css" rel="stylesheet" />
     <link href="~/Scripts/fancybox/css/jquery.fancybox.css" rel="stylesheet">
 }
 @section Scripts{
     <script src="~/Scripts/fancybox/js/jquery.fancybox.js"></script>
-
+    
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
     <script>
         $(function () {
             fanc();
@@ -121,6 +122,9 @@
                     //overlay: {
                     //    speedOut: 0
                     //}
+                },
+                onCleanup: function (e) {
+                    e.preventDefault();
                 }
             });
             /*關閉*/
@@ -216,6 +220,43 @@
             CKEDITOR.replace('Article_Content');
         }
 
+        function gogoNewArt() {
+            $.ajax({
+                type: "Post",
+                url: "@Url.Action("Create", "BackendArticle")",
+                headers: {
+                    RequestVerificationToken : '@RazorForAjax.GetForgeryToken()'
+                },
+                data:$("#idForm").serialize(),
+            success: function (data) {
 
+                $("#model").html(data);
+                doBack();
+                $.fancybox.open();
+            },
+            error: function (xhr, status) {
+                alert(xhr.responseText);
+            }
+
+        });
+        }
+        function gogoEditArt() {
+            $.ajax({
+                type: "Post",
+                url: "@Url.Action("Create", "BackendArticle")",
+               
+                data: $("#idForm").serialize(),
+            success: function (data) {
+
+                $("#model").html(data);
+                doBack();
+                $.fancybox.open();
+            },
+            error: function (xhr, status) {
+                alert(xhr.responseText);
+            }
+
+        });
+        }
     </script>
 }

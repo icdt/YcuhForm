@@ -170,7 +170,14 @@ namespace YcuhForum.Models
         }
         #endregion
 
+        #region 進階查詢
 
+        public static List<AuthOption> GetAuthoptionByIdList(List<string> idList)
+        {
+           return _AuthOptionCache.Where(a => idList.Any(b => a.AuthOption_Id == b)).ToList();
+        } 
+
+        #endregion
 
     }
 }
