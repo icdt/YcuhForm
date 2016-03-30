@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "文章列表";
+}
+
+<div class="row">
+    <div class="table-area">
+        <div class="table-tag-group">
+            <a href="@Url.Action("List", "Article")">全部</a>    
+            <a href="@Url.Action("List", "Article")">傷檢</a> 
+            <a href="@Url.Action("List", "Article")">領藥</a> 
+            <a href="@Url.Action("List", "Article")">公文</a> 
+            <a href="@Url.Action("List", "Article")">醫學</a>     
+        </div>
+        <div class="table-page">
+            <a class="table-create" href="@Url.Action("Create", "Article")"></a>
+        </div>
+        <div class="table-title">
+            <img src="~/Img/tag.png" />
+            <a href="@Url.Action("Index", "Home")">首頁</a> > <a href="@Url.Action("List", "Article")">醫管部</a> > 公文
+        </div>
+        <table border="0" cellpadding="0" cellspacing="0" class="table">
+            <thead>
+                <tr>
+                    <th>標題</th>
+                    <th width="120">作者</th>
+                    <th width="120">回覆 / 觀看次數</th>
+                    <th width="170">最近回覆</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < 5; i++)
+                {
+                    <tr>
+                        <td class="text-left">
+                            <a href="@Url.Action("Content", "Article")">衛福部中央健保署健康存摺系統推廣</a><br />
+                            <div class="table-tag"><span class="color-green">群組：</span><a href="@Url.Action("List", "Article")" class="color-orange">醫管部</a></div>
+                            <div class="table-tag"><span class="color-green">分類：</span><a href="@Url.Action("List", "Article")" class="color-orange">公文</a></div>
+                        </td>
+                        <td class="text-center">副院長</td>
+                        <td class="text-center">33 / 184</td>
+                        <td class="text-right">
+                            <a href="@Url.Action("Content", "Article")">2015/12/23 14:20</a><br />
+                            由 <a href="@Url.Action("Content", "Article")" class="color-orange">護理長</a> 回覆
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="table-page">
+            <a class="table-create" href="@Url.Action("Create", "Article")"></a>
+        </div>
+    </div>
+</div>

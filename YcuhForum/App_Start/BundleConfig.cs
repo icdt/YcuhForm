@@ -23,9 +23,6 @@ namespace YcuhForum
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/ckeditor").Include(
-            //    "~/Upload/ckeditor/ckeditor.js"));
-
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));

@@ -1,47 +1,55 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - 我的 ASP.NET 應用程式</title>
+    <title>@ViewBag.Title | 右昌醫院院內公告系統</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="~/Scripts/semanticWP-Model/jquery-semanticwp-modal.css">
+    <link rel="stylesheet" href="~/Scripts/semanticWP-Model/themes/light.css">
+    <link rel="stylesheet" href="~/Content/style.css">
+
     @RenderSection("header", required: false)
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("應用程式名稱", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("右昌醫院院內公告系統", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("首頁", "Index", "Home")</li>
-                    <li>@Html.ActionLink("關於", "About", "Home")</li>
-                    <li>@Html.ActionLink("連絡方式", "Contact", "Home")</li>
-                </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
     <div class="container body-content">
+        <div class="container-logo">
+            <a href="@Url.Action("Index", "Home")">
+                <img src="~/Img/Logo.png" />
+            </a>
+            <div class="user-status">
+                目前時間：@(DateTime.Now.ToString("yyyy/MM/dd HH:mm"))<br />
+                您上次來訪的時間為 @(DateTime.Now.ToString("yyyy/MM/dd HH:mm"))<br />
+                職稱：<span class="color-orange">護理長</span>&nbsp;&nbsp;/&nbsp;&nbsp;點數：<span class="color-orange">20</span>
+            </div>
+        </div>
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - 我的 ASP.NET 應用程式</p>
-        </footer>
     </div>
+    <footer>
+        <div class="container footer">
+            <div class="footer-date">目前時間：@(DateTime.Now.ToString("yyyy/MM/dd HH:mm"))</div>
+            右昌醫院 版權所有 &copy; @(DateTime.Now.Year) Ycuh Corporation All Rights Reserved.
+        </div>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
-    @*@Scripts.Render("~/bundles/ckeditor")*@
-    <script src="~/Upload/ckeditor/ckeditor.js"></script>
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/config.js"></script>
+    <script src="~/Upload/ckeditor/ckeditor.js"></script>
+    <script src="~/Scripts/semanticWP-Model/jquery-semanticwp-modal.js"></script>
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

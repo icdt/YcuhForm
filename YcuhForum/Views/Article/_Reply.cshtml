@@ -1,0 +1,37 @@
+﻿@model YcuhForum.Models.ArticleUserReplayModel
+
+<div class="form-hidden">
+    <div class="form-horizontal box-modal" id="replyModel">
+        <div class="box-modal_close swpmodal-close">&times;</div>
+        <h2>回覆文章</h2>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ArticleUserReplay_FK_ArticleId)
+        @Html.HiddenFor(model => model.ArticleUserReplay_FK_UserId)
+        @Html.HiddenFor(model => model.ArticleUserReplay_ParentId)
+
+        <div class="form-group">
+            <div class="col-md-12">
+                RE：衛福部中央健保署健康存摺系統推廣
+            </div>
+        </div>
+
+        <div class="form-group hasReply">
+            <div class="col-md-12">
+                護理長 回覆於 2015/12/23 14:20
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.TextAreaFor(model => model.ArticleUserReplay_Content, new { @class = "ckeditor" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12 text-right">
+                <input type="button" value="回覆文章" class="btn-edit reply" />
+            </div>
+        </div>
+    </div>
+</div>

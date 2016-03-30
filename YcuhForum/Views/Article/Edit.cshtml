@@ -1,0 +1,126 @@
+﻿@model YcuhForum.Models.ArticleModel
+@{
+    ViewBag.Title = "編輯文章";
+}
+
+<div class="row">
+    <div class="table-area">
+        <div class="table-tag-group">
+            <a href="@Url.Action("List", "Article")">全部</a>
+            <a href="@Url.Action("List", "Article")">傷檢</a>
+            <a href="@Url.Action("List", "Article")">領藥</a>
+            <a href="@Url.Action("List", "Article")">公文</a>
+            <a href="@Url.Action("List", "Article")">醫學</a>
+        </div>
+
+        @using (Html.BeginForm("Create", "Article", FormMethod.Post, new { id = "targetForm" }))
+        {
+            <div class="table-page">
+                <a class="table-back" href="@Url.Action("List", "Article")">回列表</a>
+                <a class="table-save" href="javascript:void(0)"></a>
+            </div>
+            <div class="table-title">
+                <img src="~/Img/tag.png" />
+                <a href="@Url.Action("Index", "Home")">首頁</a> > <a href="@Url.Action("List", "Article")">醫管部</a> > @ViewBag.Title
+            </div>
+
+            <div class="form-horizontal edit-form">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Article_Id)
+                @Html.HiddenFor(model => model.Article_FK_UserId)
+
+                @*<div class="form-group">
+                    @Html.Label("人員", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.ListBox("userIdList", (IEnumerable<SelectListItem>)ViewBag.ArticleGroupSelector, new { @class = "form-control" })
+                    </div>
+                </div>*@
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Article_Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Article_Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Article_Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Article_FK_PointCategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.Article_FK_PointCategoryId, (IEnumerable<SelectListItem>)ViewBag.PointCategorySelector, "請選擇", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Article_FK_PointCategoryId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Article_Content, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Article_Content, new { @class = "ckeditor" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Article_OtherSiteUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Article_OtherSiteUrl, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Article_OtherSiteUrl, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                @*<div class="form-group">
+                    @Html.LabelFor(model => model.Article_FileUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Article_FileUrl, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Article_FileUrl, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Article_IsShow, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.Article_IsShow, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Article_IsShow, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Article_IsReply, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.Article_IsReply, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Article_IsReply, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="form-group">
+                    @Html.LabelFor(model => model.Article_DelLock, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.Article_DelLock, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Article_DelLock, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>*@
+            </div>
+
+            <div class="table-page">
+                <a class="table-back" href="@Url.Action("List", "Article")">回列表</a>
+                <a class="table-save" href="javascript:void(0)"></a>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        CKEDITOR.replace('Article_Content', { filebrowserImageUploadUrl: '@Url.Action("Uploadp", "BackendCkeditor", new { Area = "" })' });
+
+        $(".table-save").click(function () {
+            $("#targetForm").submit();
+        })
+    </script>
+}

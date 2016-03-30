@@ -1,0 +1,215 @@
+﻿@{
+    ViewBag.Title = "文章內容";
+}
+
+<div class="row">
+    <div class="table-area">
+        <div class="table-tag-group">
+            <a href="@Url.Action("List", "Article")">全部</a>
+            <a href="@Url.Action("List", "Article")">傷檢</a>
+            <a href="@Url.Action("List", "Article")">領藥</a>
+            <a href="@Url.Action("List", "Article")">公文</a>
+            <a href="@Url.Action("List", "Article")">醫學</a>
+        </div>
+        <div class="table-page">
+            <a class="table-back" href="@Url.Action("List", "Article")">回列表</a>
+            <a class="table-reply" href="javascript:void(0)"></a>
+        </div>
+        <div class="table-title">
+            <img src="~/Img/tag.png" />
+            <a href="@Url.Action("Index", "Home")">首頁</a> > <a href="@Url.Action("List", "Article")">醫管部</a> > 公文
+        </div>
+        <table border="0" cellpadding="0" cellspacing="0" class="table-form">
+            <tr>
+                <td rowspan="2" width="150">
+                    <h2 class="name">副院長</h2>
+                    <p class="info">
+                        <img src="~/Img/cycle.png" class="table-cycle" />
+                        院內單位
+                    </p>
+                    <p class="info">
+                        註冊日期：<br />
+                        &nbsp;&nbsp;
+                        2015/12/23
+                    </p>
+                </td>
+                <td height="20">
+                    <h2 class="article-title">衛福部中央健保署健康存摺系統推廣</h2>
+                    <div class="btn-area">
+                        <a class="btn-edit" href="@Url.Action("Edit", "Article")">編輯</a>
+                        <a class="btn-delete" href="javascript:void(0)">刪除</a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="video">
+                        <iframe width="400" height="250" src="https://www.youtube.com/embed/LbDizRI5wrA" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="ckeditor-content">
+                        <p>
+                            教育部函轉衛生福利部函以，為加強國人自我健康管理，請鼓勵同仁使用該部中央健康保險署<br />
+                            「健康存摺」系統，詳情如附。<a href="https://med.nhi.gov.tw/ihke0000/IHKE0100S01.aspx" target="_blank">https://med.nhi.gov.tw/ihke0000/IHKE0100S01.aspx</a>
+                        </p>
+                    </div>
+                    <div class="append-area">
+                        <div class="file">附加檔案：<a href="#">健康存摺.doc</a></div>
+                        <div class="count">觀看次數：184</div>
+                    </div>
+                    <div class="function">
+                        <div class="create-date">發表於 2015/12/23 14:20</div>
+                        <div class="function-btn">
+                            <div class="table-checkbox"><input type="checkbox" /><div class="checkbox-text">已閱讀此文章</div></div>
+                            <a class="table-test" href="javascript:void(0)"></a>
+                            <a class="table-reply-article" href="javascript:void(0)"></a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="reply-title">
+                    回覆
+                </td>
+                <td class="reply-content">
+                    @for (int i = 0; i < 3; i++)
+                    {
+                        <div class="reply-content-item">
+                            <h2>副院長</h2>
+                            <div class="item-content">
+                                <span>：</span>
+                                請各位同仁一定要閱讀!!
+                            </div>
+                            <div class="item-date">
+                                2015/12/23 14:30
+                            </div>
+                        </div>
+                    }
+                </td>
+            </tr>
+        </table>
+        @for (int j = 1; j < 4; j++)
+        {
+            <table border="0" cellpadding="0" cellspacing="0" class="table-form">
+                <tr>
+                    <td rowspan="2" width="150">
+                        <h2 class="name">護理長</h2>
+                        <p class="info">
+                            <img src="~/Img/cycle.png" class="table-cycle" />
+                            護理單位
+                        </p>
+                        <p class="info">
+                            註冊日期：<br />
+                            &nbsp;&nbsp;
+                            2015/12/23
+                        </p>
+                    </td>
+                    <td height="20">
+                        <h2 class="article-title">RE：衛福部中央健保署健康存摺系統推廣</h2>
+                        <div class="level">
+                            #@(j)
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="ckeditor-content">
+                            <p>
+                                好文章值得推~~~~
+                            </p>
+                        </div>
+                        <div class="append-area">
+                        </div>
+                        <div class="function">
+                            <div class="create-date">回覆於 2015/12/23 14:20</div>
+                            <div class="function-btn">
+                                <a class="table-reply-article" href="javascript:void(0)"></a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="reply-title">
+                        回覆
+                    </td>
+                    <td class="reply-content">
+                        @for (int i = 0; i < 3; i++)
+                        {
+                            <div class="reply-content-item">
+                                <h2>副院長</h2>
+                                <div class="item-content">
+                                    <span>：</span>
+                                    請各位同仁一定要閱讀!!
+                                </div>
+                                <div class="item-date">
+                                    2015/12/23 14:30
+                                </div>
+                            </div>
+                        }
+                    </td>
+                </tr>
+            </table>
+        }
+        <div class="table-page">
+            <a class="table-back" href="@Url.Action("List", "Article")">回列表</a>
+            <a class="table-reply" href="javascript:void(0)"></a>
+        </div>
+    </div>
+
+    <!-- 回覆文章 -->
+    @Html.Action("Reply")
+
+    <!-- 文章測驗 -->
+    @Html.Action("Test")
+</div>
+
+@section Scripts{
+    <script>
+        //回覆文章
+        $(".table-reply, .table-reply-article").click(function () {
+            $('#replyModel').swpmodal({
+                //openEffect: { speed: 500 },
+                //closeEffect: { speed: 500 },
+                closeOnEsc: false,
+                closeOnOverlayClick: false,
+                beforeOpen: function (data, el) {
+                    var editor = CKEDITOR.instances['ArticleUserReplay_Content'];
+                    if (editor) {
+                        CKEDITOR.instances['ArticleUserReplay_Content'].destroy(true);
+                    }
+                    CKEDITOR.replace('ArticleUserReplay_Content', { filebrowserImageUploadUrl: '@Url.Action("Uploadp", "BackendCkeditor", new { Area = "" })' });
+                },
+                afterOpen: function (data, el) {
+
+                },
+                beforeClose: function (data, el) {
+
+                },
+                afterClose: function (data, el) {
+
+                }
+            });
+        })
+
+        //文章測驗
+        $(".table-test").click(function () {
+            $('#testModel').swpmodal({
+                //openEffect: { speed: 500 },
+                //closeEffect: { speed: 500 },
+                closeOnEsc: false,
+                closeOnOverlayClick: false,
+                beforeOpen: function (data, el) {
+                    
+                },
+                afterOpen: function (data, el) {
+
+                },
+                beforeClose: function (data, el) {
+
+                },
+                afterClose: function (data, el) {
+
+                }
+            });
+        })
+    </script>
+}

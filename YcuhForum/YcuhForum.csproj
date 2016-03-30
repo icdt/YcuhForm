@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -205,7 +206,9 @@
     <Compile Include="Controllers\ErrorPageController.cs" />
     <Compile Include="Controllers\ExaminationController.cs" />
     <Compile Include="Controllers\ForumController.cs" />
+    <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\BackendCkeditorController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\BackendPointCategoryController.cs" />
     <Compile Include="Controllers\ValidateController.cs" />
@@ -280,14 +283,39 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Img\arrow-down.png" />
+    <Content Include="Img\arrow-up.png" />
+    <Content Include="Img\article.png" />
+    <Content Include="Img\btn\btn-create-hover.png" />
+    <Content Include="Img\btn\btn-create.png" />
+    <Content Include="Img\btn\btn-reply-article-hover.png" />
+    <Content Include="Img\btn\btn-reply-article.png" />
+    <Content Include="Img\btn\btn-reply-hover.png" />
+    <Content Include="Img\btn\btn-reply.png" />
+    <Content Include="Img\btn\btn-save-hover.png" />
+    <Content Include="Img\btn\btn-save.png" />
+    <Content Include="Img\btn\btn-test-hover.png" />
+    <Content Include="Img\btn\btn-test.png" />
+    <Content Include="Img\btn\delete.png" />
+    <Content Include="Img\btn\edit.png" />
+    <Content Include="Img\cycle.png" />
+    <Content Include="Img\footer-background.png" />
+    <Content Include="Img\group.png" />
+    <Content Include="Img\head-background.png" />
+    <Content Include="Img\Logo.png" />
+    <Content Include="Img\new.png" />
+    <Content Include="Img\person.png" />
+    <Content Include="Img\tag.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="App_Code\RazorForAjax.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\config.js" />
     <Content Include="Scripts\fancybox\css\jquery.fancybox-thumbs.css" />
     <Content Include="Scripts\fancybox\css\jquery.fancybox.css" />
     <Content Include="Scripts\fancybox\img\blank.gif" />
@@ -310,6 +338,11 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\semanticWP-Model\jquery-semanticwp-modal.css" />
+    <Content Include="Scripts\semanticWP-Model\jquery-semanticwp-modal.js" />
+    <Content Include="Scripts\semanticWP-Model\loading.gif" />
+    <Content Include="Scripts\semanticWP-Model\themes\dark.css" />
+    <Content Include="Scripts\semanticWP-Model\themes\light.css" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Upload\ckeditor\adapters\jquery.js" />
     <Content Include="Upload\ckeditor\build-config.js" />
@@ -614,8 +647,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
@@ -662,9 +693,17 @@
     <Content Include="Upload\ckeditor\skins\moono\readme.md" />
     <Content Include="Views\BackendExam\_Create.cshtml" />
     <Content Include="Views\ErrorPage\Index.cshtml" />
+    <Content Include="Views\Article\List.cshtml" />
+    <Content Include="Views\Article\Content.cshtml" />
+    <Content Include="Views\Article\_Reply.cshtml" />
+    <Content Include="Views\Article\Create.cshtml" />
+    <Content Include="Views\Article\Edit.cshtml" />
+    <Content Include="Views\Article\_Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Upload\file\" />
+    <Folder Include="Upload\image\" />
     <Folder Include="Views\ArticleRead\" />
     <Folder Include="Views\ArticleRecord\" />
     <Folder Include="Views\ArticleReplay\" />

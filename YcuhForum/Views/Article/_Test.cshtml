@@ -1,0 +1,53 @@
+﻿@model IList<YcuhForum.Models.ExamQuestionModel>
+
+<div class="form-hidden">
+    <div class="form-horizontal box-modal" id="testModel">
+        <div class="box-modal_close swpmodal-close">&times;</div>
+        <h2>文章測驗</h2>
+        <hr />
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <!--测验表格-->
+                <table border="0" cellpadding="0" cellspacing="0" class="table">
+                    <thead>
+                        <tr>
+                            <th width="60">編號</th>
+                            <th>評量題目</th>
+                            <th width="220">選項</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < 5; i++)
+                        {
+                            <tr>
+                                <td class="text-center">@(i + 1)</td>
+                                <td class="text-left align-top">以下哪一項不是醫院該做的事？</td>
+                                <td class="text-left">
+                                    <div class="table_radio">
+                                        <input type="radio" value="None" name="test@(i)" id="table_radio" checked />
+                                        <label for="table_radio">拍電影</label>
+                                    </div>
+                                    <div class="table_radio">
+                                        <input type="radio" value="None" name="test@(i)" id="table_radio1" />
+                                        <label for="table_radio1">打針</label>
+                                    </div>
+                                    <div class="table_radio">
+                                        <input type="radio" value="None" name="test@(i)" id="table_radio2" />
+                                        <label for="table_radio2">掛號</label>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12 text-right">
+                <input type="button" value="送出" class="btn-edit" />
+            </div>
+        </div>
+    </div>
+</div>

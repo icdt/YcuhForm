@@ -1,31 +1,177 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "首頁";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    <div class="table-area">
+        <div class="table-title">
+            <img src="~/Img/person.png" />
+            個人訊息
+        </div>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#article" aria-controls="article" role="tab" data-toggle="tab">最新文章<i class="badge">12</i></a></li>
+            @*<li role="presentation"><a href="#reply" aria-controls="reply" role="tab" data-toggle="tab">回覆文章<i class="badge">3</i></a></li>
+            <li role="presentation"><a href="#test" aria-controls="test" role="tab" data-toggle="tab">待測驗文章<i class="badge">3</i></a></li>
+            <li role="presentation"><a href="#letter" aria-controls="letter" role="tab" data-toggle="tab">站內信<i class="badge">0</i></a></li>*@
+        </ul>
+        <!-- Tab panels -->
+        <div class="tab-content">
+            <!-- 最新文章 -->
+            <div role="tabpanel" class="tab-pane active" id="article">
+                <table border="0" cellpadding="0" cellspacing="0" class="table">
+                    <thead>
+                        <tr>
+                            <th>標題</th>
+                            <th width="120">作者</th>
+                            <th width="120">回覆 / 觀看次數</th>
+                            <th width="170">最近回覆</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < 5; i++)
+                        {
+                            <tr>
+                                <td class="text-left">
+                                    <a href="@Url.Action("Content", "Article")">衛福部中央健保署健康存摺系統推廣</a><br />
+                                    <div class="table-tag"><span class="color-green">群組：</span><a href="@Url.Action("List", "Article")" class="color-orange">醫管部</a></div>
+                                    <div class="table-tag"><span class="color-green">分類：</span><a href="@Url.Action("List", "Article")" class="color-orange">公文</a></div>
+                                </td>
+                                <td class="text-center">副院長</td>
+                                <td class="text-center">33 / 184</td>
+                                <td class="text-right">
+                                    <a href="@Url.Action("Content", "Article")">2015/12/23 14:20</a><br />
+                                    由 <a href="@Url.Action("Content", "Article")" class="color-orange">護理長</a> 回覆
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- 回覆文章 -->
+            @*<div role="tabpanel" class="tab-pane" id="reply">
+                <table border="0" cellpadding="0" cellspacing="0" class="table">
+                    <thead>
+                        <tr>
+                            <th>標題</th>
+                            <th width="120">作者</th>
+                            <th width="170">最近回覆</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < 5; i++)
+                        {
+                            <tr>
+                                <td class="text-left">
+                                    <a href="@Url.Action("Content", "Article")">RE：衛福部中央健保署健康存摺系統推廣</a><br />
+                                    <div class="table-tag"><span class="color-green">群組：</span><a href="@Url.Action("List", "Article")" class="color-orange">醫管部</a></div>
+                                    <div class="table-tag"><span class="color-green">分類：</span><a href="@Url.Action("List", "Article")" class="color-orange">公文</a></div>
+                                </td>
+                                <td class="text-center">副院長</td>
+                                <td class="text-right">
+                                    <a href="@Url.Action("Content", "Article")">2015/12/23 14:20</a><br />
+                                    由 <a href="@Url.Action("Content", "Article")" class="color-orange">護理長</a> 回覆
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>*@
+            <!-- 待測驗文章 -->
+            @*<div role="tabpanel" class="tab-pane" id="test">
+                <table border="0" cellpadding="0" cellspacing="0" class="table">
+                    <thead>
+                        <tr>
+                            <th>標題</th>
+                            <th width="120">作者</th>
+                            <th width="100">測驗總題數</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < 5; i++)
+                        {
+                            <tr>
+                                <td class="text-left">
+                                    <a href="@Url.Action("Content", "Article")">衛福部中央健保署健康存摺系統推廣</a><br />
+                                    <div class="table-tag"><span class="color-green">群組：</span><a href="@Url.Action("List", "Article")" class="color-orange">醫管部</a></div>
+                                    <div class="table-tag"><span class="color-green">分類：</span><a href="@Url.Action("List", "Article")" class="color-orange">公文</a></div>
+                                </td>
+                                <td class="text-center">副院長</td>
+                                <td class="text-center">
+                                    10
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>*@
+            <!-- 站內信 -->
+            @*<div role="tabpanel" class="tab-pane" id="letter">
+                <table border="0" cellpadding="0" cellspacing="0" class="table">
+                    <thead>
+                        <tr>
+                            <th>訊息內容</th>
+                            <th width="120">發信人</th>
+                            <th width="150">發送時間</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < 5; i++)
+                        {
+                            <tr>
+                                <td class="text-left">
+                                    <a href="#">
+                                        請於2016年三月三十一號閱讀醫管部相關資訊，以便考核。
+                                    </a>
+                                </td>
+                                <td class="text-center">董事長</td>
+                                <td class="text-center">
+                                    <a href="#">2015/12/23 14:20</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>*@
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+
+    <div class="table-area">
+        <div class="table-title">
+            <img src="~/Img/group.png" />
+            所有群組
+        </div>
+        <table border="0" cellpadding="0" cellspacing="0" class="table">
+            <thead>
+                <tr>
+                    <th width="150">群組</th>
+                    <th width="110">文章數</th>
+                    <th>最近發表主題</th>
+                    <th width="170">最近發表</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < 5; i++)
+                {
+                    <tr>
+                        <td class="text-left">
+                            <img src="~/Img/cycle.png" class="table-cycle" />
+                            <a href="@Url.Action("List", "Article")" class="table-group">醫管部</a>
+                            <img src="~/Img/new.png" class="table-new" />
+                        </td>
+                        <td class="text-center">332</td>
+                        <td class="text-left">
+                            <a href="@Url.Action("Content", "Article")">衛福部中央健保署健康存摺系統推廣</a><br />
+                            <div class="table-tag"><span class="color-green">群組：</span><a href="@Url.Action("List", "Article")" class="color-orange">醫管部</a></div>
+                            <div class="table-tag"><span class="color-green">分類：</span><a href="@Url.Action("List", "Article")" class="color-orange">公文</a></div>
+                        </td>
+                        <td class="text-right">
+                            <a href="@Url.Action("Content", "Article")">2015/12/23 14:20</a><br />
+                            由 <a href="@Url.Action("Content", "Article")" class="color-orange">副院長</a> 發表
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>

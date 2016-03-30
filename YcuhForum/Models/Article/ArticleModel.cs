@@ -12,8 +12,10 @@ namespace YcuhForum.Models
         public string Article_Id { get; set; }
 
         [Required]
+        [Display(Name = "文章標題")]
         public string Article_Title { get; set; }
 
+        [Display(Name = "文章內容")]
         public string Article_Content { get; set; }
 
         public int Article_Point { get; set; }
@@ -22,10 +24,13 @@ namespace YcuhForum.Models
         //[Remote("CheckObj", "Validate", ErrorMessage = "遠端驗證失敗")]
         public string Article_FileUrl { get; set; }
 
+        [Display(Name = "是否公開/發布")]
         public bool Article_IsShow { get; set; }
 
+        [Display(Name = "是否開放回覆")]
         public bool Article_IsReply { get; set; }
 
+        [Display(Name = "外部連結")]
         public string Article_OtherSiteUrl { get; set; }
 
         public bool Article_DelLock { get; set; }
@@ -40,6 +45,7 @@ namespace YcuhForum.Models
 
         public string Article_FK_ArticleGroupId { get; set; }
 
+        [Display(Name = "文章類型")]
         public string Article_FK_PointCategoryId { get; set; }
 
         #region 畫面所需其他表部分資料
